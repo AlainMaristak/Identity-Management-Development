@@ -1,0 +1,82 @@
+/*** COLOR 1 ***/
+/*Color texto*/
+.wcTxtColor1 {
+    color: #11071C;
+}
+/* Color de fondo */
+.wcBGColor1{
+    background-color: #11071C;
+}
+/* Botón */
+.wcBtnColor1 {
+    background-color: #11071C; /* Fondo */
+    color: #fff; /* Color del texto */
+    border: 2px solid #11071C; /* Borde */
+}
+.wcBtnColor1:hover {
+    background-color: #0e0616; /* Fondo oscuro para hover */
+    border-color: #0e0616; /* Borde oscuro para hover */
+}
+
+
+/*** COLOR 2 ***/
+/*Color texto*/
+.wcTxtColor2 {
+    color: #bd9ad6;
+}
+/* Color de fondo */
+.wcBGColor2{
+    background-color: #bd9ad6;
+}
+/* Botón */
+.wcBtnColor2 {
+    background-color: #bd9ad6; /* Fondo */
+    color: #fff; /* Color del texto */
+    border: 2px solid #bd9ad6; /* Borde */
+}
+
+.wcBtnColor2:hover {
+    background-color: #a68aab; /* Fondo oscuro para hover */
+    border-color: #a68aab; /* Borde oscuro para hover */
+}
+
+
+/*** COLOR 3 ***/
+.wcTxtColor3 { /*Color texto*/
+    color: #7522a8;
+}
+.wcBGColor3{
+    background-color: #7522a8;
+}
+/* Botón */
+.wcBtnColor3 {
+    background-color: #7522a8; /* Fondo */
+    color: #fff; /* Color del texto */
+    border: 2px solid #7522a8; /* Borde */
+}
+
+.wcBtnColor3:hover {
+    background-color: #641e93; /* Fondo oscuro para hover */
+    border-color: #641e93; /* Borde oscuro para hover */
+}
+
+/*** COLOR 4 ***/
+/*Color texto*/
+.wcTxtColor4 {
+    color: #84858d;
+}
+/* Color de fondo */
+.wcBGColor4{
+    background-color: #84858d;
+}
+/* Botón */
+.wcBtnColor4 {
+    background-color: #84858d; /* Fondo */
+    color: #fff; /* Color del texto */
+    border: 2px solid #84858d; /* Borde */
+}
+
+.wcBtnColor4:hover {
+    background-color: #73757d; /* Fondo oscuro para hover */
+    border-color: #73757d; /* Borde oscuro para hover */
+}
