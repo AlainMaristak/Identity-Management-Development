@@ -1,4 +1,5 @@
 <?php
+$np = "Inicio";
 include_once('./includes/head.php');
 include_once('./includes/navbar.php');
 ?>
