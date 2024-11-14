@@ -1,68 +1,48 @@
 <?php
+
+//Limpiando las sesiones
+session_start();
+session_unset();
+session_destroy();
+
 $np = 'Login';
+$bodyclass = 'wcBGColor2';
 include_once('./includes/head.php');
 ?>
-<section class="vh-100 wcBGColor2">
-    <div class="container py-5 h-100">
-        <div class="row d-flex justify-content-center align-items-center h-100">
-            <div class="col-12 col-md-8 col-lg-6 col-xl-5">
-                <div class="card shadow-2-strong" style="border-radius: 1rem;">
-                    <div class="card-body p-5 text-center">
 
-                        <h3 class="mb-5">Sign in</h3>
-
-                        <form>
-                            <!-- Email input -->
-                            <div class="form-floating mb-4">
-                                <input type="email" id="form2Example1" class="form-control" placeholder="Email address" />
-                                <label for="form2Example1">Email</label>
-                            </div>
-
-                            <!-- Password input -->
-                            <div class="form-floating mb-4">
-                                <input type="password" id="form2Example2" class="form-control" placeholder="Password" />
-                                <label for="form2Example2">Contraseña</label>
-                            </div>
-
-                            <!-- 2 column grid layout for inline styling -->
-                            <div class="row mb-4">
-                                <div class="col d-flex justify-content-center">
-                                    <!-- Checkbox -->
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="" id="form2Example31" checked />
-                                        <label class="form-check-label" for="form2Example31"> Remember me </label>
-                                    </div>
-                                </div>
-
-                                <div class="col">
-                                    <!-- Simple link -->
-                                    <a href="#!">Forgot password?</a>
-                                </div>
-                            </div>
-
-                            <!-- Submit button -->
-                            <button type="button" class="btn btn-primary btn-block mb-4 wcBtnColor3">Sign in</button>
-
-                            <!-- SSO button -->
-                            <div class="text-center">
-                                <p>or sign in with Single Sign-On:</p>
-                                <button type="button" class="btn btn-lg btn-block btn-primary mb-4 wcBtnColor3">
-                                    <i class="fas fa-sign-in-alt me-2"></i> Sign in with SSO
-                                </button>
-                            </div>
-
-                            <!-- Register link -->
-                            <div class="text-center">
-                                <p>Not a member? <a href="#!">Register</a></p>
-                            </div>
-                        </form>
-
-                    </div>
-                </div>
+<div class="container d-flex justify-content-center align-items-center vh-100">
+    <div class="card p-4 shadow" style="width: 100%; max-width: 400px;">
+        <h3 class="text-center mb-1">Iniciar Sesión en</h3>
+        <h4 class="text-center mb-4">Wanna Crack</h4>
+        <form method="POST" action="./funciones/login.php">
+            <!-- Email input con form-floating -->
+            <div class="form-floating mb-4">
+                <input type="email" id="formLoginCorreo" class="form-control" placeholder="Correo electrónico" name="correo" required>
+                <label for="formLoginCorreo">Correo electrónico</label>
             </div>
+
+            <!-- Password input con form-floating -->
+            <div class="form-floating mb-4">
+                <input type="password" id="formLoginContrasena" class="form-control" placeholder="Contraseña" name="contrasena" required>
+                <label for="formLoginContrasena">Contraseña</label>
+            </div>
+
+            <!-- Botón de inicio de sesión -->
+            <button type="submit" class="btn btn-primary w-100 mb-2 wcBtnColor3">Iniciar sesión</button>
+        </form>
+
+        <!-- Divider con línea y texto "OR" en el centro -->
+        <div class="d-flex align-items-center my-4">
+            <hr class="flex-grow-1">
+            <span class="text-center mx-3 text-muted fw-bold">o</span>
+            <hr class="flex-grow-1">
         </div>
+
+        <!-- Botón de inicio de sesión con otra opción (ejemplo de red social) -->
+        <button type="button" class="btn btn-outline-secondary w-100">Iniciar sesión con SSO</button>
+
     </div>
-</section>
+</div>
 
 <?php
 include_once('./includes/footer.php');

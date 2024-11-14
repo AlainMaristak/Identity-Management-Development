@@ -1,35 +1,55 @@
 <?php
+session_start();
+if (empty($_SESSION['id']) || $_SESSION['tipo'] != 'empresa') {
+    header("Location: index.php");
+    die();
+}
 $np = "Inicio";
+$bodyclass = '';
 include_once('./includes/head.php');
 include_once('./includes/navbar.php');
 ?>
-<div class='container mt-5'>
-    <h1 class='text-center'>Ejemplo de Modal en Bootstrap 5</h1>
 
-    <!-- Botón para abrir el modal -->
-    <div class='text-center mt-4'>
-        <button class='btn btn-primary' data-bs-toggle='modal' data-bs-target='#myModal'>Abrir Modal</button>
-    </div>
+<!-- Contenido principal -->
+<div class="content">
+    <h1>Bienvenido</h1>
+    <p>Este es el contenido principal de la página. El sidebar se encuentra a la izquierda y es fijo.</p>
+    <h2 class="text-center mb-4">Lista de Productos</h2>
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Precio</th>
+                <th scope="col">Categoría</th>
+                <th scope="col">Stock</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>Producto A</td>
+                <td>$10.00</td>
+                <td>Electrónica</td>
+                <td>50</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Producto B</td>
+                <td>$20.00</td>
+                <td>Ropa</td>
+                <td>100</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>Producto C</td>
+                <td>$15.00</td>
+                <td>Alimentos</td>
+                <td>200</td>
+            </tr>
+        </tbody>
+    </table>
 </div>
-
-<!-- Modal -->
-<div class='modal fade' id='myModal' tabindex='-1' aria-labelledby='myModalLabel' aria-hidden='true'>
-    <div class='modal-dialog'>
-        <div class='modal-content'>
-            <div class='modal-header'>
-                <h5 class='modal-title' id='myModalLabel'>Título del Modal</h5>
-                <button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Cerrar'></button>
-            </div>
-            <div class='modal-body'>
-                Este es el contenido de tu modal. Puedes colocar cualquier información aquí.
-            </div>
-            <div class='modal-footer'>
-                <button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Cerrar</button>
-                <button type='button' class='btn btn-primary'>Guardar cambios</button>
-            </div>
-        </div>
-    </div>
-</div>
-<?php
-include_once('./includes/footer.php');
-?>
+    <?php
+    include_once('./includes/footer.php');
+    ?>
