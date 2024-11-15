@@ -1,36 +1,24 @@
-<!-- Barra de navegación superior -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#">Mi Aplicación</a>
-    <div class="d-flex ms-auto">
-      <span class="navbar-text">AMOGUSS</span>
-    </div>
+<div class="d-flex">
+  <!-- Sidebar -->
+  <div id="sidebar" class="bg-dark text-white p-3">
+    <h3 class="mb-4">Panel Admin</h3>
+    <ul class="nav flex-column">
+      <li class="nav-item">
+        <a href="#" class="nav-link text-white"><i class="lni lni-dashboard"></i> Dashboard</a>
+      </li>
+      <li class="nav-item">
+        <a href="#" class="nav-link text-white"><i class="lni lni-users"></i> Usuarios</a>
+      </li>
+      <li class="nav-item">
+        <a href="#" class="nav-link text-white"><i class="lni lni-cog"></i> Configuración</a>
+      </li>
+    </ul>
   </div>
-</nav>
 
-<div class="container-fluid">
-  <div class="row">
-    <!-- Sidebar -->
-    <div class="sidebar d-flex flex-column p-3">
-      <h2 class="text-center">Sidebar</h2>
-      <hr>
-      <ul class="nav flex-column">
-        <li class="nav-item">
-          <a href="#" class="nav-link active">Inicio</a>
-        </li>
-        <li class="nav-item">
-          <a href="#" class="nav-link">Perfil</a>
-        </li>
-        <li class="nav-item">
-          <a href="#" class="nav-link">Configuración</a>
-        </li>
-        <li class="nav-item">
-          <a href="#" class="nav-link">Ayuda</a>
-        </li>
-        <li class="nav-item">
-          <a href="#" class="nav-link">Cerrar Sesión</a>
-        </li>
-      </ul>
-    </div>
-  </div>
-</div>
+  <!-- Botón de tirador -->
+  <button id="toggle-sidebar" class="btn d-lg-none">
+    <span id="toggle-icon" class="lni lni-chevron-left"></span>
+  </button>
+
+  <!-- Contenido Principal -->
+  <div id="main-content" class="flex-grow-1 p-4">
