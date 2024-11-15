@@ -3,7 +3,7 @@
   <div class="container-fluid">
     <a class="navbar-brand" href="#">Mi Aplicación</a>
     <div class="d-flex ms-auto">
-      <span class="navbar-text">AMOGUS</span>
+      <span class="navbar-text">AMOGUSS</span>
     </div>
   </div>
 </nav>
