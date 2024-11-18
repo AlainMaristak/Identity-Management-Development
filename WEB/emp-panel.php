@@ -1,9 +1,11 @@
 <?php
 session_start();
-if (empty($_SESSION['id']) || $_SESSION['tipo'] != 'empresa') {
-    header("Location: index.php");
-    die();
-}
+if (empty($_SESSION['id']) || $_SESSION['tipo'] != 'empresa') { header("Location: index.php"); die(); }
+
+$usuario = $_SESSION['usuario'];
+$nombre_empresa = $_SESSION['nombre_empresa'];
+$tipo = $_SESSION['tipo'];
+
 $np = "Inicio";
 $bodyclass = '';
 include_once('./includes/head.php');
@@ -12,8 +14,8 @@ include_once('./includes/BBDD.php');
 ?>
 
 <!-- Contenido principal -->
-<h1>Bienvenido Alain</h1>
-<p>texto de ejemplo</p>
+<h1>Bienvenido <?php echo $usuario ?></h1>
+<!-- <p>texto de ejemplo</p> -->
 <h2 class="text-center mb-4">Últimas transacciones</h2>
 <?php
 

@@ -1,0 +1,8 @@
+RewriteEngine On
+RewriteBase /Identity-Management-Development/WEB/
+
+# Reescribir "Inicio" para que apunte a "index.php"
+RewriteRule ^Inicio$ index.php [L]
+
+# Reescribir "panel" para que apunte a "emp-panel.php"
+RewriteRule ^panel$ emp-panel.php [L]

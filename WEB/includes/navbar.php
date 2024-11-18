@@ -1,17 +1,42 @@
 <div class="d-flex">
   <!-- Sidebar -->
   <div id="sidebar" class="bg-dark text-white p-3">
-    <h3 class="mb-4">Panel Admin</h3>
+    <h3 class="mb-4">Wanna Crack</h3>
     <ul class="nav flex-column">
-      <li class="nav-item">
-        <a href="#" class="nav-link text-white"><i class="lni lni-dashboard"></i> Dashboard</a>
-      </li>
-      <li class="nav-item">
-        <a href="#" class="nav-link text-white"><i class="lni lni-users"></i> Usuarios</a>
-      </li>
-      <li class="nav-item">
-        <a href="#" class="nav-link text-white"><i class="lni lni-cog"></i> Configuración</a>
-      </li>
+      <?php if ($tipo == 'admin') { //Navbar Administrador ?> 
+        <li class="nav-item">
+          <a href="#" class="nav-link text-white"><i class="bi bi-house"></i> Dashboard</a>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link text-white"><i class="bi bi-person-circle"></i> Perfil</a>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link text-white"><i class="bi bi-wallet2"></i> Configuración</a>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link text-white"><i class="bi bi-search"></i> Análisis</a>
+        </li>
+        <li class="nav-item">
+          <a href="./funciones/salir.php" class="nav-link text-white"><i class="bi bi-box-arrow-right"></i> Cerrar sesión</a>
+        </li>
+      <?php } else if ($tipo == 'empresa') { //Navbar Empresa ?>
+        <li class="nav-item">
+          <a href="./emp-panel.php" class="nav-link text-white"><i class="bi bi-house"></i> Dashboard</a>
+        </li>
+        <li class="nav-item">
+          <a href="./emp-perfil.php" class="nav-link text-white"><i class="bi bi-person-circle"></i> Perfil</a>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link text-white"><i class="bi bi-wallet2"></i> Configuración</a>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link text-white"><i class="bi bi-search"></i> Análisis</a>
+        </li>
+        <li class="nav-item">
+          <a href="./funciones/salir.php" class="nav-link text-white"><i class="bi bi-box-arrow-right"></i> Cerrar sesión</a>
+        </li>
+      <?php } ?>
+
     </ul>
   </div>
 
