@@ -146,3 +146,48 @@
     margin-left: 0;
     width: 100%;
 }
+
+
+
+/* Estilos para los cuadrados de las opciones de tarjeta */
+.card-option {
+    position: relative;
+    cursor: pointer;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+/* Ocultar el input de radio */
+.form-check-input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+/* Estilizar la etiqueta como un cuadrado */
+.form-check-label {
+    display: block;
+    padding: 1rem;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    text-align: center;
+}
+
+/* Cambiar estilos cuando el radio está seleccionado */
+.form-check-input:checked + .form-check-label {
+    background-color: #0d6efd;
+    color: white;
+    border-color: #0d6efd;
+}
+
+/* Estilizar el texto dentro de la etiqueta */
+.form-check-label p {
+    margin-bottom: 0;
+    color: #6c757d;
+}
+
+/* Efecto hover para mejorar la experiencia del usuario */
+.form-check-label:hover {
+    background-color: #f8f9fa;
+}

@@ -27,7 +27,7 @@
           <a href="./emp-perfil.php" class="nav-link text-white"><i class="bi bi-person-circle"></i> Perfil</a>
         </li>
         <li class="nav-item">
-          <a href="#" class="nav-link text-white"><i class="bi bi-wallet2"></i> Configuración</a>
+          <a href="./emp-tarjeta-nuevo-gasto.php" class="nav-link text-white"><i class="bi bi-file-earmark-plus"></i> Nuevo gasto</a>
         </li>
         <li class="nav-item">
           <a href="#" class="nav-link text-white"><i class="bi bi-search"></i> Análisis</a>

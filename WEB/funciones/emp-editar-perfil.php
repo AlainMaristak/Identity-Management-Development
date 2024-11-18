@@ -15,7 +15,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $CIF = htmlspecialchars($_POST['CIF']);
     $id = $_SESSION['id'];
 
-    // Crear la consulta SQL para actualizar el usuario con el ID = 1
     $sql = "UPDATE usuarios SET 
             usuario = ?, 
             correo = ?, 
@@ -30,15 +29,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Ejecutar la consulta
         if ($stmt->execute()) {
-            echo "Usuario actualizado correctamente.";
+            // echo "Usuario actualizado correctamente.";
         } else {
-            echo "Error al actualizar el usuario: " . $stmt->error;
+            // echo "Error al actualizar el usuario: " . $stmt->error;
         }
 
         // Cerrar la sentencia
         $stmt->close();
     } else {
-        echo "Error en la preparación de la consulta: " . $conn->error;
+        // echo "Error en la preparación de la consulta: " . $conn->error;
     }
 
     // Cerrar la conexión

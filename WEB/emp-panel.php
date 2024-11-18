@@ -19,12 +19,18 @@ include_once('./includes/BBDD.php');
 <h2 class="text-center mb-4">Últimas transacciones</h2>
 <?php
 
+$id = $_SESSION['id'];
 
-// Consulta SQL para obtener las columnas deseadas
-$sql = "SELECT fecha, descripcion, importe FROM tarjetas_transacciones WHERE id = 1";
+// Verifica que $id sea un número
+if (!is_numeric($id)) {
+    die("ID inválido.");
+}
 
-// Ejecutar la consulta
-$result = $conn->query($sql);
+$sql = "SELECT fecha, descripcion, importe FROM tarjetas_transacciones WHERE id = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $id); 
+$stmt->execute();
+$result = $stmt->get_result();
 
 // Verificar si hay resultados
 if ($result->num_rows > 0) {
