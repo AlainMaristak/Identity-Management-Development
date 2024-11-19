@@ -30,6 +30,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Ejecutar la consulta
         if ($stmt->execute()) {
             // echo "Usuario actualizado correctamente.";
+            $_SESSION['usuario'] = $usuario;
+            $_SESSION['nombre_empresa'] = $nombre_empresa;
         } else {
             // echo "Error al actualizar el usuario: " . $stmt->error;
         }

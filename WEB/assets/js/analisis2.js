@@ -30,19 +30,50 @@ form.addEventListener('submit', async (e) => {
 
     // Realiza la solicitud AJAX
     try {
-        const response = await fetch('./funciones/api_analisis.php', {
+        const response = await fetch('./funciones/api_analisis2.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({ ip: fullIP }),
         });
-
+    
         const result = await response.json(); // Asume que el servidor devuelve JSON
-
+    
         // Oculta la barra de progreso y muestra el resultado
         progressContainer.style.display = 'none';
-        resultContainer.innerHTML = `<div class="text-success">Resultado: ${result.message}</div>`;
+    
+        // Verifica si hay un mensaje de éxito y los datos completos
+        if (result.message === 'Análisis completado' && result.data) {
+            let resultHTML = `
+                <div class="text-success">Análisis completado para IP: ${result.data.IP}</div>
+                <div><strong>Estado:</strong> ${result.data.Estado}</div>
+                <div><strong>Razón:</strong> ${result.data.Razón}</div>
+                <div><strong>Dirección IPv4:</strong> ${result.data['Dirección IPv4']}</div>
+                <div><strong>MAC Address:</strong> ${result.data['MAC Address']}</div>
+                <div><strong>Nombres de Host:</strong> ${result.data['Nombres de Host'] || 'No disponible'}</div>
+                <div><strong>Puertos:</strong></div>
+            `;
+    
+            // Si hay puertos, los mostramos
+            if (result.data.Puertos && result.data.Puertos.length > 0) {
+                result.data.Puertos.forEach(port => {
+                    resultHTML += `
+                        <div>
+                            <strong>Puerto ${port.Puerto}</strong>: ${port.Nombre || 'Desconocido'} 
+                            - Estado: ${port.Estado || 'Desconocido'} - Razón: ${port.Razón || 'Desconocido'}
+                        </div>
+                    `;
+                });
+            } else {
+                resultHTML += '<div>No se encontraron puertos.</div>';
+            }
+    
+            resultContainer.innerHTML = resultHTML;
+        } else {
+            // Si no hay datos o el análisis falló
+            resultContainer.innerHTML = `<div class="text-danger">No se encontraron datos para la IP proporcionada.</div>`;
+        }
     } catch (error) {
         // Manejo de errores
         progressContainer.style.display = 'none';

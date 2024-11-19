@@ -28,9 +28,8 @@ form.addEventListener('submit', async (e) => {
     resultContainer.innerHTML = ''; // Limpia el resultado anterior
     animateProgressBar();
 
-    // Realiza la solicitud AJAX
     try {
-        const response = await fetch('./funciones/api_analisis.php', {
+        const response = await fetch('./funciones/api_analisis3.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -40,15 +39,55 @@ form.addEventListener('submit', async (e) => {
 
         const result = await response.json(); // Asume que el servidor devuelve JSON
 
-        // Oculta la barra de progreso y muestra el resultado
+        // Oculta la barra de progreso
         progressContainer.style.display = 'none';
-        resultContainer.innerHTML = `<div class="text-success">Resultado: ${result.message}</div>`;
+
+        // Verifica si la respuesta contiene datos
+        if (result.message === 'Análisis completado' && result.data) {
+            const data = result.data[fullIP]; // Obtén los datos de la IP analizada
+            let resultHTML = `
+                <div class="text-success">Análisis completado para IP: ${fullIP}</div>
+                <div><strong>Estado:</strong> ${data.status.state}</div>
+                <div><strong>Razón:</strong> ${data.status.reason}</div>
+                <div><strong>Dirección IPv4:</strong> ${data.addresses.ipv4}</div>
+                <div><strong>MAC Address:</strong> ${data.addresses.mac}</div>
+                <div><strong>Último reinicio:</strong> ${data.uptime.lastboot}</div>
+                <div><strong>Tiempo activo:</strong> ${data.uptime.seconds} segundos</div>
+                <div><strong>Sistemas Operativos Detectados:</strong></div>
+                <ul>
+            `;
+
+            // Itera sobre los sistemas operativos detectados
+            data.osmatch.forEach(os => {
+                resultHTML += `<li>${os.name} (Precisión: ${os.accuracy}%)</li>`;
+            });
+
+            resultHTML += '</ul><div><strong>Puertos Abiertos:</strong></div><ul>';
+
+            // Itera sobre los puertos abiertos
+            Object.entries(data.tcp).forEach(([port, details]) => {
+                resultHTML += `
+                    <li>
+                        <strong>Puerto ${port}</strong> (${details.name}) 
+                        - Estado: ${details.state} - Producto: ${details.product} 
+                        - Versión: ${details.version}
+                    </li>
+                `;
+            });
+
+            resultHTML += '</ul>';
+            resultContainer.innerHTML = resultHTML;
+        } else {
+            // Si no hay datos o el análisis falló
+            resultContainer.innerHTML = `<div class="text-danger">No se encontraron datos para la IP proporcionada.</div>`;
+        }
     } catch (error) {
         // Manejo de errores
         progressContainer.style.display = 'none';
         resultContainer.innerHTML = `<div class="text-danger">Error al realizar el análisis: ${error.message}</div>`;
     }
 });
+
 
 // Función para animar la barra de progreso
 function animateProgressBar() {

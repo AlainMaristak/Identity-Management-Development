@@ -28,26 +28,63 @@ form.addEventListener('submit', async (e) => {
     resultContainer.innerHTML = ''; // Limpia el resultado anterior
     animateProgressBar();
 
-    // Realiza la solicitud AJAX
     try {
-        const response = await fetch('./funciones/api_analisis.php', {
+        const response = await fetch('./funciones/api_analisis4.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({ ip: fullIP }),
         });
-
+    
         const result = await response.json(); // Asume que el servidor devuelve JSON
-
+    
         // Oculta la barra de progreso y muestra el resultado
         progressContainer.style.display = 'none';
-        resultContainer.innerHTML = `<div class="text-success">Resultado: ${result.message}</div>`;
+    
+        // Verifica si el análisis se completó correctamente
+        if (result.message === 'Análisis completado' && result.data) {
+            let resultHTML = `
+                <div class="text-success">Análisis completado para IP: ${result.data.IP}</div>
+                <div><strong>Estado:</strong> ${result.data.Estado}</div>
+                <div><strong>Razón:</strong> ${result.data.Razón}</div>
+                <div><strong>Dirección IPv4:</strong> ${result.data['Dirección IPv4']}</div>
+                <div><strong>MAC Address:</strong> ${result.data['MAC Address']}</div>
+                <div><strong>Uptime:</strong> ${result.data.Uptime}</div>
+                <div><strong>Sistemas Operativos Detectados:</strong></div>
+                <ul>
+            `;
+    
+            // Muestra los sistemas operativos detectados
+            result.data['Sistemas Operativos'].forEach(os => {
+                resultHTML += `<li>${os}</li>`;
+            });
+    
+            resultHTML += '</ul><div><strong>Puertos Abiertos:</strong></div><ul>';
+    
+            // Muestra los puertos abiertos
+            result.data.Puertos.forEach(port => {
+                resultHTML += `
+                    <li>
+                        <strong>Puerto ${port.Puerto}</strong> (${port.Protocolo}) 
+                        - Estado: ${port.Estado} - Producto: ${port.Producto} - Versión: ${port.Versión}
+                    </li>
+                `;
+            });
+    
+            resultHTML += '</ul>';
+            resultContainer.innerHTML = resultHTML;
+        } else {
+            // Si no hay datos o el análisis falló
+            resultContainer.innerHTML = `<div class="text-danger">No se encontraron datos para la IP proporcionada.</div>`;
+        }
     } catch (error) {
         // Manejo de errores
         progressContainer.style.display = 'none';
         resultContainer.innerHTML = `<div class="text-danger">Error al realizar el análisis: ${error.message}</div>`;
     }
+    
+    
 });
 
 // Función para animar la barra de progreso

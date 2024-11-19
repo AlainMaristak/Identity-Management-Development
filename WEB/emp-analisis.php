@@ -27,13 +27,13 @@ include_once('./includes/BBDD.php');
             <div class="mb-3 col-md-6">
                 <label for="ip1" class="form-label">Dirección IP</label>
                 <div class="d-flex align-items-center">
-                    <input class="form-control text-center mx-1" type="text" maxlength="3" id="ip1" name="ip1" placeholder="123" style="width: 70px;" required>
+                    <input class="form-control text-center mx-1" type="text" maxlength="3" id="ip1" name="ip1" placeholder="0" style="width: 70px;" value='10' required>
                     <span style="margin-bottom: 6px; font-size: 1.5rem;">.</span>
-                    <input class="form-control text-center mx-1" type="text" maxlength="3" id="ip2" name="ip2" placeholder="123" style="width: 70px;" required>
+                    <input class="form-control text-center mx-1" type="text" maxlength="3" id="ip2" name="ip2" placeholder="0" style="width: 70px;" value='11' required>
                     <span style="margin-bottom: 6px; font-size: 1.5rem;">.</span>
-                    <input class="form-control text-center mx-1" type="text" maxlength="3" id="ip3" name="ip3" placeholder="123" style="width: 70px;" required>
+                    <input class="form-control text-center mx-1" type="text" maxlength="3" id="ip3" name="ip3" placeholder="0" style="width: 70px;" value='0' required>
                     <span style="margin-bottom: 6px; font-size: 1.5rem;">.</span>
-                    <input class="form-control text-center mx-1" type="text" maxlength="3" id="ip4" name="ip4" placeholder="123" style="width: 70px;" required>
+                    <input class="form-control text-center mx-1" type="text" maxlength="3" id="ip4" name="ip4" placeholder="X" style="width: 70px;" value='' required>
                 </div>
             </div>
             <!-- Botones de Acción -->
