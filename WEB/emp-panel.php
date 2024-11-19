@@ -63,6 +63,6 @@ if ($result->num_rows > 0) {
 // Liberar los resultados
 $result->free();
 
-
+function footerjs() { echo ""; }
 include_once('./includes/footer.php');
 ?>

@@ -30,7 +30,7 @@
           <a href="./emp-tarjeta-nuevo-gasto.php" class="nav-link text-white"><i class="bi bi-file-earmark-plus"></i> Nuevo gasto</a>
         </li>
         <li class="nav-item">
-          <a href="#" class="nav-link text-white"><i class="bi bi-search"></i> Análisis</a>
+          <a href="./emp-analisis.php" class="nav-link text-white"><i class="bi bi-search"></i> Análisis</a>
         </li>
         <li class="nav-item">
           <a href="./funciones/salir.php" class="nav-link text-white"><i class="bi bi-box-arrow-right"></i> Cerrar sesión</a>

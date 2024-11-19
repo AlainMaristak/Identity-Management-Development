@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const toggleButton = document.getElementById("toggle-sidebar");
     const toggleIcon = document.getElementById("toggle-icon");
     const mainContent = document.getElementById("main-content");
- 
+
     // Manejador de evento para cambiar el tamaño de la ventana
     window.addEventListener("resize", () => {
         if (window.innerWidth >= 992) {
@@ -16,10 +16,10 @@ document.addEventListener("DOMContentLoaded", function () {
             toggleIcon.classList.replace("lni-chevron-left", "lni-chevron-right");
         }
     });
- 
+
     toggleButton.addEventListener("click", () => {
         sidebar.classList.toggle("active");
- 
+
         // Cambiar la dirección de la flecha
         if (sidebar.classList.contains("active")) {
             toggleIcon.classList.replace("lni-chevron-left", "lni-chevron-right");
