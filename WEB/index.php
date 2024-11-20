@@ -6,11 +6,11 @@ session_unset();
 session_destroy();
 
 $np = 'Login';
-$bodyclass = 'wcBGColor2';
+$bodyclass = 'wcBGColor2 WCRaton';
 include_once('./includes/head.php');
 ?>
 
-<div class="container d-flex justify-content-center align-items-center vh-100" style='cursor: zoom-in'>
+<div class="container d-flex justify-content-center align-items-center vh-100">
     <div class="card p-4 shadow" style="width: 100%; max-width: 400px;">
         <h3 class="text-center mb-1">Iniciar Sesión en</h3>
         <h4 class="text-center mb-4">Wanna Crack</h4>
@@ -45,5 +45,12 @@ include_once('./includes/head.php');
 </div>
 
 <?php
+
+function footerjs()
+{
+    echo "
+        <script src='./assets/bootstrap/js/bootstrap.bundle.min.js'></script>
+    ";
+}
 include_once('./includes/footer.php');
 ?>

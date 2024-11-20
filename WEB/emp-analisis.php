@@ -22,24 +22,39 @@ include_once('./includes/BBDD.php');
 <h2 class="text-center mb-4">Nuevo Análisis</h2>
 <div class="card shadow-lg p-4">
     <form id="ipForm">
-        <div class="row">
+        <div class="row g-3">
             <!-- Campo de Dirección IP -->
-            <div class="mb-3 col-md-6">
+            <div class="col-12 col-md-6 col-lg-4 mb-3">
                 <label for="ip1" class="form-label">Dirección IP</label>
-                <div class="d-flex align-items-center">
-                    <input class="form-control text-center mx-1" type="text" maxlength="3" id="ip1" name="ip1" placeholder="0" style="width: 70px;" value='10' required>
-                    <span style="margin-bottom: 6px; font-size: 1.5rem;">.</span>
-                    <input class="form-control text-center mx-1" type="text" maxlength="3" id="ip2" name="ip2" placeholder="0" style="width: 70px;" value='11' required>
-                    <span style="margin-bottom: 6px; font-size: 1.5rem;">.</span>
-                    <input class="form-control text-center mx-1" type="text" maxlength="3" id="ip3" name="ip3" placeholder="0" style="width: 70px;" value='0' required>
-                    <span style="margin-bottom: 6px; font-size: 1.5rem;">.</span>
-                    <input class="form-control text-center mx-1" type="text" maxlength="3" id="ip4" name="ip4" placeholder="X" style="width: 70px;" value='' required>
+                <div class="d-flex flex-wrap align-items-center">
+                    <input class="form-control text-center mx-1" type="text" maxlength="3" id="ip1" name="ip1" placeholder="0" style="width: 70px;" value="10" required>
+                    <span class="mx-1" style="font-size: 1.5rem;">.</span>
+                    <input class="form-control text-center mx-1" type="text" maxlength="3" id="ip2" name="ip2" placeholder="0" style="width: 70px;" value="11" required>
+                    <span class="mx-1" style="font-size: 1.5rem;">.</span>
+                    <input class="form-control text-center mx-1" type="text" maxlength="3" id="ip3" name="ip3" placeholder="0" style="width: 70px;" value="0" required>
+                    <span class="mx-1" style="font-size: 1.5rem;">.</span>
+                    <input class="form-control text-center mx-1" type="text" maxlength="3" id="ip4" name="ip4" placeholder="X" style="width: 70px;" value="" required>
                 </div>
             </div>
+
+            <!-- Modo de escaneo -->
+            <div class="col-12 col-md-6 col-lg-4 mb-3">
+                <label for="modo_escaneo" class="form-label">Modo de escaneo</label>
+                <div class="btn-group w-100" role="group" aria-label="Tipo de scaneo" id="modo_escaneo">
+                    <input type="radio" class="btn-check" name="modo_escaneo" id="modo_escaneo_simple" autocomplete="off" checked>
+                    <label class="btn btn-outline-primary" for="modo_escaneo_simple">Simple</label>
+
+                    <input type="radio" class="btn-check" name="modo_escaneo" id="modo_escaneo_completo" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="modo_escaneo_completo">Completo</label>
+
+                    <input type="radio" class="btn-check" name="modo_escaneo" id="modo_escaneo_vulnerabilidades" autocomplete="off">
+                    <label class="btn btn-outline-primary" for="modo_escaneo_vulnerabilidades">Vulnerabilidades</label>
+                </div>
+            </div>
+
             <!-- Botones de Acción -->
-            <div class="mb-3 col-md-6 d-flex justify-content-end align-items-center mt-auto">
-                <button type="button" class="btn btn-secondary me-2" onclick="resetInputs()">Limpiar</button>
-                <button type="submit" class="btn btn-primary">Realizar análisis</button>
+            <div class="col-12 col-lg-4 d-flex justify-content-lg-end align-items-center mt-auto mb-3">
+                <button type="submit" class="btn btn-primary w-100 w-lg-auto">Realizar análisis</button>
             </div>
         </div>
     </form>
@@ -57,7 +72,10 @@ include_once('./includes/BBDD.php');
 <?php
 
 function footerjs() {
-    echo "<script src='./assets/js/analisis.js'></script>";
+    echo "
+    <script src='./assets/bootstrap/js/bootstrap.bundle.min.js'></script>
+    <script src='./assets/js/main.js'></script>
+    <script src='./assets/js/analisis.js'></script>";
 }
 
 include_once('./includes/footer.php');

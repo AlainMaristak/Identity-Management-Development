@@ -130,6 +130,9 @@ if ($result->num_rows > 0) {
 $result->free();
 
 
-function footerjs() { echo ""; }
+function footerjs() { echo "
+        <script src='./assets/bootstrap/js/bootstrap.bundle.min.js'></script>
+    <script src='./assets/js/main.js'></script>
+    "; }
 include_once('./includes/footer.php');
 ?>

@@ -192,3 +192,8 @@
 .form-check-label:hover {
     background-color: #f8f9fa;
 }
+
+/*Raton*/
+.WCRaton {
+    cursor: url('../img/WCRaton.png'), auto !important;
+}
