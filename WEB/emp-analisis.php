@@ -39,7 +39,7 @@ include_once('./includes/BBDD.php');
 
             <!-- Modo de escaneo -->
             <div class="col-12 col-md-6 col-lg-4 mb-3">
-                <label for="modo_escaneo" class="form-label">Modo de escaneo</label>
+                <label for="modo_escaneo_simple" class="form-label">Modo de escaneo</label>
                 <div class="btn-group w-100" role="group" aria-label="Tipo de scaneo" id="modo_escaneo">
                     <input type="radio" class="btn-check" name="modo_escaneo" id="modo_escaneo_simple" autocomplete="off" checked>
                     <label class="btn btn-outline-primary" for="modo_escaneo_simple">Simple</label>
