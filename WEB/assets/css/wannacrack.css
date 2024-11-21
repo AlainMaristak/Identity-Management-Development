@@ -194,7 +194,7 @@
 } */
 
 .WCRaton {
-    cursor: url('../img/Cursor.png'), auto !important;
+    cursor: url('../img/XD.png'), auto !important;
 }
 
 
@@ -275,4 +275,9 @@
 
   .bd-mode-toggle .dropdown-menu .active .bi {
     display: block !important;
+  }
+
+
+  html, body {
+    height: 100%;
   }

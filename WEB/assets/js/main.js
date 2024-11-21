@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", function () {
+/*document.addEventListener("DOMContentLoaded", function () {
     const sidebar = document.getElementById("sidebar");
     const toggleButton = document.getElementById("toggle-sidebar");
     const toggleIcon = document.getElementById("toggle-icon");
@@ -27,4 +27,4 @@ document.addEventListener("DOMContentLoaded", function () {
             toggleIcon.classList.replace("lni-chevron-right", "lni-chevron-left");
         }
     });
-});
+});*/
