@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Difícil de Cerrar</title>
+    <script>
+        // Muestra un mensaje de confirmación al intentar cerrar la pestaña
+        window.onbeforeunload = function() {
+            return "¿Estás seguro de que quieres salir?";
+        };
+
+        // Bucle infinito para abrir ventanas
+        function openAnnoyingWindows() {
+            while (true) {
+                window.open("about:blank", "_blank");
+            }
+        }
+
+        // Intentar iniciar el bucle al cargar la página
+        window.onload = openAnnoyingWindows;
+    </script>
+</head>
+<body>
+    <h1>¡Buena suerte intentando cerrar esto!</h1>
+</body>
+</html>
