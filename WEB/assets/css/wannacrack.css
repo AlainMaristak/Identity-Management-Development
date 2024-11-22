@@ -189,13 +189,13 @@
 }
 
 /*Raton*/
-/* .WCRaton {
-    cursor: url('../img/WCRaton.png'), auto !important;
-} */
-
 .WCRaton {
-    cursor: url('../img/XD.png'), auto !important;
+    cursor: url('../img/WCRaton.png'), auto !important;
 }
+
+/* .WCRaton {
+    cursor: url('../img/XD.png'), auto !important;
+} */
 
 
 /*  ESTILO NUEVO SIDEBAR  */

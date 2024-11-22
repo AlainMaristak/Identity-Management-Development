@@ -12,18 +12,21 @@ $tipo = $_SESSION['tipo'];
 $np = "Inicio";
 $bodyclass = '';
 include_once('./includes/head.php');
+include_once('./includes/cabecera.php');
 include_once('./includes/navbar.php');
 include_once('./includes/BBDD.php');
 ?>
 
-<!-- Contenido principal -->
-<h1>Perfil</h1>
-<!-- <p>texto de ejemplo</p> -->
-<h2 class="text-center mb-4">Datos del perfil</h2>
+
+
+<!-- CONTENIDO -->
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Perfil</h1>
+  </div>
+  <!-- <h2 class="text-center mb-4">Datos del perfil</h2> -->
 <?php
-
-
-// Consulta SQL para obtener los datos de un único usuario con id = 1
+  // Consulta SQL para obtener los datos de un único usuario con id = 1
 $sql = "SELECT id, tipo, usuario, correo, contrasena, nombre_empresa, CIF, ultima_conexion, fecha_registro, activo FROM usuarios WHERE id = 1";
 
 // Ejecutar la consulta
@@ -115,12 +118,7 @@ if ($result->num_rows > 0) {
       </form>
     </div>
   </div>
-</div>
-
-
-
-'
-;
+</div>';
 } else {
     // Mensaje si no se encuentra el usuario
     echo '<div class="alert alert-warning text-center" role="alert">No se encontró el usuario con ID = 1.</div>';
@@ -128,11 +126,13 @@ if ($result->num_rows > 0) {
 
 // Liberar los resultados
 $result->free();
+?>
 
+</main>
+<!-- FIN CONTENIDO -->
 
-function footerjs() { echo "
-        <script src='./assets/bootstrap/js/bootstrap.bundle.min.js'></script>
-    <script src='./assets/js/main.js'></script>
-    "; }
+<?php
+
+function footerjs() { echo ""; }
 include_once('./includes/footer.php');
 ?>
