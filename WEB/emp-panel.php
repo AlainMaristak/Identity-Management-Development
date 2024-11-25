@@ -28,7 +28,10 @@ $tipo = $_SESSION['tipo'];
     // Verifica que $id sea un número
     if (!is_numeric($id)) { die("ID inválido."); }
 
-    $sql = "SELECT fecha, descripcion, importe FROM tarjetas_transacciones WHERE id = ?";
+    $sql = "SELECT transacciones.fecha, transacciones.descripcion, transacciones.importe, transacciones.ticket
+            FROM transacciones
+            INNER JOIN usuarios_tarjetas ON usuarios_tarjetas.id = transacciones.id_usuario_tarjeta
+            WHERE usuarios_tarjetas.id_usuario = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $id);
     $stmt->execute();
@@ -42,6 +45,7 @@ $tipo = $_SESSION['tipo'];
                 <th scope="col">Fecha</th>
                 <th scope="col">Descripción</th>
                 <th scope="col">Importe</th>
+                <th scope="col">Ticket</th>
             </tr>
         </thead>
         <tbody>';
@@ -49,8 +53,13 @@ $tipo = $_SESSION['tipo'];
             echo '<tr>
                 <td>' . htmlspecialchars($row['fecha']) . '</td>
                 <td>' . htmlspecialchars($row['descripcion']) . '</td>
-                <td>' . htmlspecialchars($row['importe']) . '</td>
-            </tr>';
+                <td>' . htmlspecialchars($row['importe']) . '</td>';
+                if (!empty($row['ticket'])) {
+                    echo '<td><a href="' . htmlspecialchars($row['ticket']) . ' "target="_blank"> Ticket </a></td>';
+                } else {
+                    echo '<td>No hay ticket</td>';
+                }
+            echo '</tr>';
         }
         echo '</tbody>
     </table>';

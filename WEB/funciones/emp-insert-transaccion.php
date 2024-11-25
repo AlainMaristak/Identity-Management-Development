@@ -1,15 +1,12 @@
 <?php
 session_start();
-if (empty($_SESSION['id']) || $_SESSION['tipo'] != 'empresa') { header("Location: index.php"); die(); }
+if (empty($_SESSION['id']) || $_SESSION['tipo'] != 'empresa') { header("Location: index.php"); exit(); }
 
 $nombre_empresa = $_SESSION['nombre_empresa'];
-
-$uploadDir = '../tickets/' . $nombre_empresa; // Directorio para guardar los archivos
+$uploadDir = '../tickets/' . $nombre_empresa . '/'; // Directorio para guardar los archivos
 $allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'application/pdf']; // Tipos de archivos permitidos
 
-// Verificar si la solicitud es POST
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Recibir datos del formulario
     $tipoTarjeta = $_POST['tipo_tarjeta'] ?? null;
     $importe = $_POST['importe'] ?? null;
     $descripcion = $_POST['descripcion'] ?? null;
@@ -17,45 +14,70 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Validar campos obligatorios
     if (!$tipoTarjeta || !$importe || !$descripcion) {
-        die('Error: Todos los campos son obligatorios.'); //////////////////////////////////////
+        die('Error: Todos los campos son obligatorios.');
     }
 
-    // Validar tipo de archivo si se subió uno
+    if (!is_numeric($importe) || $importe <= 0) {
+        die('Error: El importe debe ser un número mayor a 0.');
+    }
+
     if ($archivo && $archivo['error'] === 0) {
         $fileType = mime_content_type($archivo['tmp_name']);
         if (!in_array($fileType, $allowedTypes)) {
-            die('Error: Tipo de archivo no permitido.'); //////////////////////////////////////
+            die('Error: Tipo de archivo no permitido.');
         }
 
-        // Generar un nombre único para el archivo y moverlo al directorio de subida
-        $fileName = uniqid() . '-' . basename($archivo['name']);
+        $fileName = uniqid() . '-' . preg_replace('/[^a-zA-Z0-9_\.-]/', '', basename($archivo['name']));
         $filePath = $uploadDir . $fileName;
 
-        // Crear el directorio si no existe
         if (!is_dir($uploadDir)) {
-            mkdir($uploadDir, 0777, true);
+            mkdir($uploadDir, 0755, true);
         }
 
         if (!move_uploaded_file($archivo['tmp_name'], $filePath)) {
-            die('Error: No se pudo subir el archivo.'); //////////////////////////////////////
+            die('Error: No se pudo subir el archivo.');
         }
     } else {
-        $filePath = null; // No se subió archivo
+        $filePath = null;
     }
 
     include_once('../includes/bbdd.php');
 
-    $stmt = $conn->prepare('INSERT INTO transacciones (tipo_tarjeta, importe, descripcion, archivo) VALUES (?, ?, ?, ?)');
-    $stmt->bind_param('sdss', $tipoTarjeta, $importe, $descripcion, $filePath);
+    $id_usuario = $_SESSION['id'];
+    $num_tipo_tarjeta = $tipoTarjeta === 'debito' ? '1' : ($tipoTarjeta === 'credito' ? '2' : null);
+    if ($num_tipo_tarjeta === null) {
+        die('Error: Tipo de tarjeta no válido.');
+    }
+
+    $sql = "SELECT usuarios_tarjetas.id FROM `usuarios_tarjetas`
+            INNER JOIN tarjetas ON tarjetas.id = usuarios_tarjetas.id_tarjeta
+            WHERE tarjetas.tipo = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param('s', $num_tipo_tarjeta);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        $id_usuario_tarjeta = $row['id'];
+    } else {
+        die('Error: No se encontró la tarjeta asociada.');
+    }
+
+    $fecha = date('Y-m-d H:i:s');
+
+    $filePath = substr($filePath, 1);
+    $stmt = $conn->prepare('INSERT INTO transacciones (id_usuario_tarjeta, fecha, descripcion, importe, ticket) VALUES (?, ?, ?, ?, ?)');
+    $stmt->bind_param('issss', $id_usuario_tarjeta, $fecha, $descripcion, $importe, $filePath);
+
     if ($stmt->execute()) {
         echo 'Datos insertados correctamente.';
     } else {
-        echo 'Error al insertar los datos: ' . $stmt->error;
+        echo 'Error al insertar los datos: ' . htmlspecialchars($stmt->error);
     }
     $stmt->close();
-    $conexion->close();
+    $conn->close();
 
-    // Respuesta de éxito
     echo 'Datos procesados con éxito.';
     if ($filePath) {
         echo ' Archivo guardado en: ' . htmlspecialchars($filePath);

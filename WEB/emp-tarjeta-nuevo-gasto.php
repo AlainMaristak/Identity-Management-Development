@@ -27,7 +27,7 @@ include_once('./includes/BBDD.php');
         <form action="./funciones/emp-insert-transaccion.php" method="POST" enctype="multipart/form-data">
             <!-- Opciones de Tipo de Tarjeta en dos columnas -->
             <div class="row mb-2">
-                <div class="col-md-6 mb-1">
+                <div class="col-md-6">
                     <div class="form-check card-option" style="padding-left: 0;">
                         <input class="form-check-input" type="radio" name="tipo_tarjeta" id="debito" value="debito" required>
                         <label class="form-check-label" for="debito">
