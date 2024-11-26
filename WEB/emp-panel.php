@@ -31,13 +31,17 @@ $tipo = $_SESSION['tipo'];
     $sql = "SELECT transacciones.fecha, transacciones.descripcion, transacciones.importe, transacciones.ticket
             FROM transacciones
             INNER JOIN usuarios_tarjetas ON usuarios_tarjetas.id = transacciones.id_usuario_tarjeta
-            WHERE usuarios_tarjetas.id_usuario = ?";
+            WHERE usuarios_tarjetas.id_usuario = ?
+            ORDER BY transacciones.fecha DESC
+            LIMIT 10";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $id);
     $stmt->execute();
     $result = $stmt->get_result();
 
     // Verificar si hay resultados
+    echo '<p>Últimas 10 transacciones</p>';
+
     if ($result->num_rows > 0) {
         echo '<table class="table table-striped table-bordered">
         <thead>
