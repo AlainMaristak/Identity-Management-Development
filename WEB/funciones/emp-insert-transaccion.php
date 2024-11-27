@@ -85,3 +85,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 } else {
     die('Método de solicitud no permitido.');
 }
+
+header("Location: ../emp-tarjeta-nuevo-gasto.php");

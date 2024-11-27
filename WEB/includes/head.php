@@ -12,7 +12,8 @@
   <link rel='stylesheet' href='./assets/bootstrap/bootstrap-icons-1.11.3/font/bootstrap-icons.css'>
   <link href='./assets/css/dashboard.css' rel='stylesheet'>
   <link href='./assets/css/wannacrack.css' rel='stylesheet'>
-  
+  <link href='https://cdn.jsdelivr.net/npm/gridjs/dist/theme/mermaid.min.css' rel='stylesheet' />
+  <script src='https://cdn.jsdelivr.net/npm/gridjs/dist/gridjs.umd.js'></script>
 </head>
 <body class='$bodyclass'>
 ");
