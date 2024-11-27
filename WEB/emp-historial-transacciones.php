@@ -9,7 +9,6 @@ $bodyclass = '';
 include_once('./includes/head.php');
 include_once('./includes/cabecera.php');
 include_once('./includes/navbar.php');
-include_once('./includes/BBDD.php');
 
 $usuario = $_SESSION['usuario'];
 $nombre_empresa = $_SESSION['nombre_empresa'];
@@ -22,99 +21,29 @@ $tipo = $_SESSION['tipo'];
         <h1 class="h2">Últimas transacciones</h1>
     </div>
 
-    <?php
-    $id = $_SESSION['id'];
-    // Verifica que $id sea un número
-    if (!is_numeric($id)) {
-        die("ID inválido.");
-    }
-
-    // Consulta SQL para obtener los datos
-    $sql = "SELECT transacciones.fecha, transacciones.descripcion, transacciones.importe, transacciones.ticket
-        FROM transacciones
-        INNER JOIN usuarios_tarjetas ON usuarios_tarjetas.id = transacciones.id_usuario_tarjeta
-        WHERE usuarios_tarjetas.id_usuario = ?
-        ORDER BY transacciones.fecha DESC";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $id);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    // Inicializar totales
-    $total_mes_actual = 0;
-    $total_mes_anterior = 0;
-    $total_ano = 0;
-    $total_global = 0;
-
-    // Obtener fechas relevantes
-    $fecha_actual = new DateTime();
-    $primer_dia_mes_actual = (clone $fecha_actual)->modify('first day of this month')->format('Y-m-d');
-    $ultimo_dia_mes_anterior = (clone $fecha_actual)->modify('last day of previous month')->format('Y-m-d');
-    $primer_dia_mes_anterior = (clone $fecha_actual)->modify('first day of previous month')->format('Y-m-d');
-    $inicio_ano = $fecha_actual->format('Y') . '-01-01';
-
-    echo '
     <div class="row">
-        <div class="col-lg-8">';
-
-    // Crear tabla
-    if ($result->num_rows > 0) {
-        echo '<table class="table table-striped table-bordered">
-        <thead>
-            <tr>
-                <th scope="col">Fecha</th>
-                <th scope="col">Descripción</th>
-                <th scope="col">Importe</th>
-                <th scope="col">Ticket</th>
-            </tr>
-        </thead>
-        <tbody>';
-
-        while ($row = $result->fetch_assoc()) {
-            $fecha_transaccion = $row['fecha'];
-            $importe = floatval($row['importe']);
-
-            // Calcular totales según el rango de fechas
-            if ($fecha_transaccion >= $primer_dia_mes_actual) {
-                $total_mes_actual += $importe; // Mes actual
-            } elseif ($fecha_transaccion >= $primer_dia_mes_anterior && $fecha_transaccion <= $ultimo_dia_mes_anterior) {
-                $total_mes_anterior += $importe; // Mes anterior
-            }
-            if ($fecha_transaccion >= $inicio_ano) {
-                $total_ano += $importe; // Año actual
-            }
-            $total_global += $importe; // Total acumulado
-
-            // Mostrar filas de la tabla
-            echo '<tr>
-                <td>' . htmlspecialchars($row['fecha']) . '</td>
-                <td>' . htmlspecialchars($row['descripcion']) . '</td>
-                <td>' . htmlspecialchars(number_format($importe, 2)) . ' €</td>';
-            if (!empty($row['ticket'])) {
-                echo '<td><a href="' . htmlspecialchars($row['ticket']) . '" target="_blank">Ticket</a></td>';
-            } else {
-                echo '<td>No hay ticket</td>';
-            }
-            echo '</tr>';
-        }
-
-        echo '</tbody>
-    </table>';
-    } else {
-        echo "<p>No se encontraron transacciones para el ID especificado.</p>";
-    }
-
-    echo "
+        <div class="col-lg-8">
+            <table class="table table-striped table-bordered" id="tabla-transacciones">
+                <thead>
+                    <tr>
+                        <th scope="col">Fecha</th>
+                        <th scope="col">Descripción</th>
+                        <th scope="col">Importe</th>
+                        <th scope="col">Ticket</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
         </div>
-        <div class='col-lg-4'>
-            <div class='bg-body-secondary p-2'>
-                <p class='h3'>Mes actual: " . number_format($total_mes_actual, 2) . " €</p>
-                <p class='h4'>Mes anterior: " . number_format($total_mes_anterior, 2) . " €</p>
-                <p class='h5'>Año actual: " . number_format($total_ano, 2) . " €</p>
-                <p class='h6'>Total global: " . number_format($total_global, 2) . " €</p>
+        <div class="col-lg-4">
+            <div class="bg-body-secondary p-2">
+                <p class="h3">Mes actual: <span id="mes-actual">0.00 €</span></p>
+                <p class="h4">Mes anterior: <span id="mes-anterior">0.00 €</span></p>
+                <p class="h5">Año actual: <span id="ano-actual">0.00 €</span></p>
+                <p class="h6">Total global: <span id="global">0.00 €</span></p>
             </div>
-            <div>"; ?>
-                <form method="GET" action="ruta_a_tu_script.php" class="mb-4 mt-2">
+            <div>
+                <form id="filtroForm" class="mb-4 mt-2">
                     <!-- Filtro por fecha -->
                     <div class="row mb-3">
                         <div class="col-md-6">
@@ -123,7 +52,7 @@ $tipo = $_SESSION['tipo'];
                         </div>
                         <div class="col-md-6">
                             <label for="fecha_fin" class="form-label">Fecha fin</label>
-                            <input type="date" class="form-control" id="fecha_fin" name="fecha_fin" value="<?php echo date('Y-m-d'); ?>">
+                            <input type="date" class="form-control" id="fecha_fin" name="fecha_fin">
                         </div>
                     </div>
 
@@ -144,16 +73,89 @@ $tipo = $_SESSION['tipo'];
                         <button type="submit" class="btn btn-primary">Filtrar</button>
                     </div>
                 </form>
-<?php echo "
+                <?php echo "
             </div>
         </div>
-
     </div>";
-    // Liberar los resultados
-    $result->free();
-    ?>
+                // Liberar los resultados
+                ?>
 </main>
 <!-- FIN CONTENIDO -->
+
+<script>
+    // Función para obtener y cargar las transacciones
+    function cargarTransacciones(filtros = {}) {
+        const {
+            fecha_inicio = "", fecha_fin = "", precio_min = "", precio_max = ""
+        } = filtros;
+
+        fetch("./funciones/emp-datos-historial-transacciones.php", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    fecha_inicio,
+                    fecha_fin,
+                    precio_min,
+                    precio_max
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Limpiar la tabla antes de agregar los nuevos datos
+                const tbody = document.querySelector("#tabla-transacciones tbody");
+                tbody.innerHTML = "";
+
+                // Insertar las nuevas transacciones
+                data.transacciones.forEach(transaccion => {
+                    const row = document.createElement("tr");
+                    row.innerHTML = `
+                <td>${transaccion.fecha}</td>
+                <td>${transaccion.descripcion}</td>
+                <td>${Number(transaccion.importe).toFixed(2)} €</td>
+                <td>${transaccion.ticket 
+                    ? `<a href="${transaccion.ticket}" target="_blank">Ticket</a>` 
+                    : "No hay ticket"}</td>`;
+                    tbody.appendChild(row);
+                });
+
+
+                // Actualizar los totales (si no se han puesto filtros)
+                if (!fecha_inicio && !fecha_fin && !precio_min && !precio_max) {
+                    document.getElementById("mes-actual").textContent = `${data.totales.mes_actual.toFixed(2)} €`;
+                    document.getElementById("mes-anterior").textContent = `${data.totales.mes_anterior.toFixed(2)} €`;
+                    document.getElementById("ano-actual").textContent = `${data.totales.ano_actual.toFixed(2)} €`;
+                    document.getElementById("global").textContent = `${data.totales.global.toFixed(2)} €`;
+                }
+            })
+            .catch(error => console.error("Error al cargar los datos:", error));
+    }
+
+    // Ejecutar cuando el formulario sea enviado
+    document.querySelector("form").addEventListener("submit", function(event) {
+        event.preventDefault(); // Prevenir el envío normal del formulario
+
+        const fechaInicio = document.getElementById("fecha_inicio").value;
+        const fechaFin = document.getElementById("fecha_fin").value;
+        const precioMin = document.getElementById("precio_min").value;
+        const precioMax = document.getElementById("precio_max").value;
+
+        // Llamar a la función para cargar las transacciones con filtros
+        cargarTransacciones({
+            fecha_inicio: fechaInicio,
+            fecha_fin: fechaFin,
+            precio_min: precioMin,
+            precio_max: precioMax
+        });
+    });
+
+    // Ejecutar al cargar la página sin filtros
+    document.addEventListener("DOMContentLoaded", () => {
+        cargarTransacciones();
+    });
+</script>
+
 
 
 <?php
