@@ -20,7 +20,7 @@ if (isset($inputData['ip'])) {
     }
 
     // Construye la URL de la solicitud externa
-    $url = "http://10.11.0.161:8080/scan_simple?ip=" . urlencode($ip);
+    $url = "http://10.11.0.161:9000/scan_simple?ip=" . urlencode($ip);
 
     // Realiza la solicitud HTTP
     $result = file_get_contents($url);

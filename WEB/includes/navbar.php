@@ -19,9 +19,9 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link d-flex align-items-center gap-2" href="./emp-perfil.php">
-                <i class="bi bi-person-circle"></i>
-                Perfil
+              <a class="nav-link d-flex align-items-center gap-2" href="./emp-historial-transacciones.php">
+                <i class="bi bi-clock-history"></i>
+                Historial de transacciones
               </a>
             </li>
             <li class="nav-item">
@@ -31,15 +31,15 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link d-flex align-items-center gap-2" href="./emp-historial-transacciones.php">
-                <i class="bi bi-clock-history"></i>
-                Historial de transacciones
-              </a>
-            </li>
-            <li class="nav-item">
               <a class="nav-link d-flex align-items-center gap-2" href="./emp-analisis.php">
                 <i class="bi bi-search"></i>
                 Análisis
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link d-flex align-items-center gap-2" href="./emp-perfil.php">
+                <i class="bi bi-person-circle"></i>
+                Perfil
               </a>
             </li>
           </ul>

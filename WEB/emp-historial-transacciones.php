@@ -18,22 +18,12 @@ $tipo = $_SESSION['tipo'];
 <!-- CONTENIDO -->
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Últimas transacciones</h1>
+        <h1 class="h2">Historial de transacciones</h1>
     </div>
 
     <div class="row">
         <div class="col-lg-8">
-            <table class="table table-striped table-bordered" id="tabla-transacciones">
-                <thead>
-                    <tr>
-                        <th scope="col">Fecha</th>
-                        <th scope="col">Descripción</th>
-                        <th scope="col">Importe</th>
-                        <th scope="col">Ticket</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
+            <div id="tabla-transacciones"></div>
         </div>
         <div class="col-lg-4">
             <div class="bg-body-secondary p-2">
@@ -83,8 +73,21 @@ $tipo = $_SESSION['tipo'];
 <!-- FIN CONTENIDO -->
 
 <script>
-    // Función para obtener y cargar las transacciones
+    let grid; // Variable para almacenar la instancia de Grid.js
+
+    // Función para cargar las transacciones con Grid.js
     function cargarTransacciones(filtros = {}) {
+        const tabla = document.getElementById('tabla-transacciones');
+
+        if (tabla.innerHTML.trim() === "") {
+            console.log("true");
+            var actualizar_totales = true;
+        } else {
+            console.log("false");
+            tabla.innerHTML = "";
+            var actualizar_totales = false;
+        }
+
         const {
             fecha_inicio = "", fecha_fin = "", precio_min = "", precio_max = ""
         } = filtros;
@@ -103,26 +106,64 @@ $tipo = $_SESSION['tipo'];
             })
             .then(response => response.json())
             .then(data => {
-                // Limpiar la tabla antes de agregar los nuevos datos
-                const tbody = document.querySelector("#tabla-transacciones tbody");
-                tbody.innerHTML = "";
+                if (grid) {
+                    grid.destroy();
+                }
 
-                // Insertar las nuevas transacciones
-                data.transacciones.forEach(transaccion => {
-                    const row = document.createElement("tr");
-                    row.innerHTML = `
-                <td>${transaccion.fecha}</td>
-                <td>${transaccion.descripcion}</td>
-                <td>${Number(transaccion.importe).toFixed(2)} €</td>
-                <td>${transaccion.ticket 
-                    ? `<a href="${transaccion.ticket}" target="_blank">Ticket</a>` 
-                    : "No hay ticket"}</td>`;
-                    tbody.appendChild(row);
-                });
+                // Crear la tabla con Grid.js
+                grid = new gridjs.Grid({
+                    columns: [{
+                            name: "Fecha",
+                            sort: true
+                        },
+                        {
+                            name: "Descripción",
+                            sort: true
+                        },
+                        {
+                            name: "Importe (€)",
+                            sort: {
+                                compare: (a, b) => parseFloat(a) - parseFloat(b) // Comparar como números
+                            },
+                            formatter: (cell) => parseFloat(cell).toFixed(2) // Mostrar con dos decimales
+                        },
+                        {
+                            name: "Ticket",
+                            formatter: (cell) => cell ?
+                                gridjs.html(`<a href="${cell}" target="_blank">Ticket</a>`) : "No hay ticket"
+                        }
+                    ],
+                    data: data.transacciones.map(transaccion => [
+                        transaccion.fecha,
+                        transaccion.descripcion,
+                        parseFloat(transaccion.importe).toFixed(2),
+                        transaccion.ticket
+                    ]),
+                    pagination: {
+                        limit: 10, // Número de registros por página
+                    },
+                    search: false,
+                    sort: true,
+                    language: {
+                        search: {
+                            placeholder: 'Buscar...'
+                        },
+                        pagination: {
+                            showing: 'Mostrando del',
+                            // 1
+                            to: 'al',
+                            // 10
+                            of: 'de un total de',
+                            // 20
+                            previous: 'Anterior',
+                            next: 'Siguiente',
+                            results: () => 'registros',
+                        }
+                    }
+                }).render(document.getElementById("tabla-transacciones"));
 
-
-                // Actualizar los totales (si no se han puesto filtros)
-                if (!fecha_inicio && !fecha_fin && !precio_min && !precio_max) {
+                // Actualizar los totales si no hay filtros
+                if (actualizar_totales) {
                     document.getElementById("mes-actual").textContent = `${data.totales.mes_actual.toFixed(2)} €`;
                     document.getElementById("mes-anterior").textContent = `${data.totales.mes_anterior.toFixed(2)} €`;
                     document.getElementById("ano-actual").textContent = `${data.totales.ano_actual.toFixed(2)} €`;
@@ -132,7 +173,7 @@ $tipo = $_SESSION['tipo'];
             .catch(error => console.error("Error al cargar los datos:", error));
     }
 
-    // Ejecutar cuando el formulario sea enviado
+    // Configurar el evento de envío del formulario
     document.querySelector("form").addEventListener("submit", function(event) {
         event.preventDefault(); // Prevenir el envío normal del formulario
 
@@ -141,7 +182,7 @@ $tipo = $_SESSION['tipo'];
         const precioMin = document.getElementById("precio_min").value;
         const precioMax = document.getElementById("precio_max").value;
 
-        // Llamar a la función para cargar las transacciones con filtros
+        // Recargar la tabla con los filtros aplicados
         cargarTransacciones({
             fecha_inicio: fechaInicio,
             fecha_fin: fechaFin,
@@ -150,7 +191,7 @@ $tipo = $_SESSION['tipo'];
         });
     });
 
-    // Ejecutar al cargar la página sin filtros
+    // Cargar los datos al inicio
     document.addEventListener("DOMContentLoaded", () => {
         cargarTransacciones();
     });

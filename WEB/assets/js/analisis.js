@@ -155,24 +155,24 @@ form.addEventListener('submit', async (e) => {
 
                 if (result.message === 'Análisis completado' && result.data) {
                     let resultHTML = `
-                        <div class="text-success">Análisis completado para IP: ${result.data.IP}</div>
-                        <div><strong>Estado:</strong> ${result.data.Estado}</div>
-                        <div><strong>Razón:</strong> ${result.data.Razón}</div>
-                        <div><strong>Dirección IPv4:</strong> ${result.data['Dirección IPv4']}</div>
-                        <div><strong>MAC Address:</strong> ${result.data['MAC Address']}</div>
-                        <div><strong>Nombres de Host:</strong> ${result.data['Nombres de Host'] || 'No disponible'}</div>
-                        <div><strong>Puertos:</strong></div>
-                    `;
+                <div class="text-success">Análisis completado para IP: ${result.data.IP}</div>
+                <div><strong>Estado:</strong> ${result.data.Estado}</div>
+                <div><strong>Razón:</strong> ${result.data.Razón}</div>
+                <div><strong>Dirección IPv4:</strong> ${result.data['Dirección IPv4']}</div>
+                <div><strong>MAC Address:</strong> ${result.data['MAC Address']}</div>
+                <div><strong>Nombres de Host:</strong> ${result.data['Nombres de Host'] || 'No disponible'}</div>
+                <div><strong>Puertos:</strong></div>
+            `;
 
                     if (result.data.Puertos && result.data.Puertos.length > 0) {
                         result.data.Puertos.forEach(port => {
                             resultHTML += `
-                                <div>
-                                    <strong>Puerto ${port.Puerto}</strong>: ${port.Nombre || 'Desconocido'} 
-                                    - Estado: ${port.Estado || 'Desconocido'} 
-                                    - Razón: ${port.Razón || 'Desconocido'}
-                                </div>
-                            `;
+                        <div>
+                            <strong>Puerto ${port.Puerto}</strong>: ${port.Nombre || 'Desconocido'} 
+                            - Estado: ${port.Estado || 'Desconocido'} 
+                            - Razón: ${port.Razón || 'Desconocido'}
+                        </div>
+                    `;
 
                             if (port.Script && Object.keys(port.Script).length > 0) {
                                 resultHTML += '<div><strong>Detalles del Script:</strong></div><ul>';
@@ -196,6 +196,7 @@ form.addEventListener('submit', async (e) => {
             }
             break;
         default:
+
             console.log('Modo de escaneo no seleccionado');
             break;
     }
