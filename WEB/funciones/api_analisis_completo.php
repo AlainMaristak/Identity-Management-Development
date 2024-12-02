@@ -25,6 +25,27 @@ if (isset($inputData['ip'])) {
     // Realiza la solicitud HTTP
     $result = file_get_contents($url);
 
+    // Decodifica la cadena JSON para trabajar con ella en PHP
+    $data = json_decode($result, true); // `true` lo convierte a un array asociativo
+
+    // Verifica si la decodificación fue exitosa
+    if ($data === null) {
+        http_response_code(500); // Código de error interno del servidor
+        echo json_encode(['error' => 'Error al procesar la respuesta de la API']);
+        exit;
+    }
+
+    // Codifica nuevamente el JSON en un formato limpio y devuelve la respuesta
+    header('Content-Type: application/json');
+
+    echo json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+    die();
+
+
+
+    // Realiza la solicitud HTTP
+    $result = file_get_contents($url);
+
     if ($result === FALSE) {
         // Si la solicitud falla, muestra un error
         $response = [
@@ -92,4 +113,3 @@ header('Content-Type: application/json');
 
 // Envía la respuesta como JSON
 echo json_encode($response);
-?>
