@@ -11,6 +11,7 @@ $tipo = $_SESSION['tipo'];
 
 $np = "Inicio";
 $bodyclass = '';
+//includes
 include_once('./includes/head.php');
 include_once('./includes/cabecera.php');
 include_once('./includes/navbar.php');
