@@ -4,7 +4,7 @@ if (empty($_SESSION['id']) || $_SESSION['tipo'] != 'empresa') {
     header("Location: index.php");
     die();
 }
-$np = "Inicio";
+$np = "Historial de transacciones";
 $bodyclass = '';
 include_once('./includes/head.php');
 include_once('./includes/cabecera.php');

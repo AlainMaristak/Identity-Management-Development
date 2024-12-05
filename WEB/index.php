@@ -1,5 +1,4 @@
 <?php
-
 //Limpiando las sesiones
 session_start();
 session_unset();
@@ -10,10 +9,12 @@ $bodyclass = 'wcBGColor2 WCRaton';
 include_once('./includes/head.php');
 ?>
 
+<div class="snow-overlay"></div>
+
 <div class="container d-flex justify-content-center align-items-center vh-100">
     <div class="card p-4 shadow" style="width: 100%; max-width: 400px;">
         <h3 class="text-center mb-1">Iniciar Sesión en</h3>
-        <h4 class="text-center mb-4">Wanna Crack</h4>
+        <h4 class="text-center mb-4">WannaCrack</h4>
         <form method="POST" action="./funciones/login.php">
             <!-- Email input con form-floating -->
             <div class="form-floating mb-4">

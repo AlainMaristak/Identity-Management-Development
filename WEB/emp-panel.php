@@ -1,9 +1,7 @@
 <?php
 session_start();
-if (empty($_SESSION['id']) || $_SESSION['tipo'] != 'empresa') {
-    header("Location: index.php");
-    die();
-}
+if (empty($_SESSION['id']) || $_SESSION['tipo'] != 'empresa') { header("Location: index.php"); die(); }
+
 $np = "Inicio";
 $bodyclass = '';
 include_once('./includes/head.php');
@@ -75,8 +73,7 @@ $tipo = $_SESSION['tipo'];
                         },
                         {
                             name: "Ticket",
-                            formatter: (cell) => cell ?
-                                gridjs.html(`<a href="${cell}" target="_blank">Ticket</a>`) : "No hay ticket"
+                            formatter: (cell) => cell ? gridjs.html(`<a href="${cell}" target="_blank">Ticket</a>`) : "No hay ticket"
                         }
                     ],
                 data: <?php echo json_encode($transacciones, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT); ?>,

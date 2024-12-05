@@ -15,6 +15,7 @@ include_once('./includes/head.php');
 include_once('./includes/cabecera.php');
 include_once('./includes/navbar.php');
 include_once('./includes/BBDD.php');
+include_once('./includes/gpt.php');
 ?>
 
 

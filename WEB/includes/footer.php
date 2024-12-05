@@ -5,7 +5,9 @@ echo ("
     </div>
 </div>
 <script src='./assets/bootstrap/js/bootstrap.bundle.min.js'></script>
-<script src='./assets/js/main.js'></script>");
+<script src='./assets/js/gpt.js'></script>
+<script src='./assets/js/main.js'></script>
+");
 } 
 footerjs();
 echo "</body> </html>";
