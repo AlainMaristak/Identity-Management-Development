@@ -22,23 +22,23 @@ include_once('./includes/BBDD.php');
 
 <!-- CONTENIDO -->
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-    <h1 class="h2">Perfil</h1>
-  </div>
-  <!-- <h2 class="text-center mb-4">Datos del perfil</h2> -->
-<?php
-  // Consulta SQL para obtener los datos de un único usuario con id = 1
-$sql = "SELECT id, tipo, usuario, correo, contrasena, nombre_empresa, CIF, ultima_conexion, fecha_registro, activo FROM usuarios WHERE id = 1";
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">Perfil</h1>
+    </div>
+    <!-- <h2 class="text-center mb-4">Datos del perfil</h2> -->
+    <?php
+    // Consulta SQL para obtener los datos de un único usuario con id = 1
+    $sql = "SELECT id, tipo, usuario, correo, contrasena, nombre_empresa, CIF, ultima_conexion, fecha_registro, activo FROM usuarios WHERE id = 1";
 
-// Ejecutar la consulta
-$result = $conn->query($sql);
+    // Ejecutar la consulta
+    $result = $conn->query($sql);
 
-// Verificar si hay resultados
-if ($result->num_rows > 0) {
-    // Obtener los datos del usuario
-    $row = $result->fetch_assoc();
+    // Verificar si hay resultados
+    if ($result->num_rows > 0) {
+        // Obtener los datos del usuario
+        $row = $result->fetch_assoc();
 
-    echo '
+        echo '
 <div class="container mt-5">
     <div class="row">
         <!-- Primer div -->
@@ -83,11 +83,14 @@ if ($result->num_rows > 0) {
 
 <!-- Modal -->
 <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="staticBackdropLabel">Editar Datos de Usuario</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+    <div class="row">
+        <div class="col-12"><h5 class="modal-title" id="staticBackdropLabel">Editar Datos de Usuario</h5></div>
+        <div class="col-12"><small class="text-muted">Los cambios realizados en el perfil solo se aplicarán en esta aplicación web, no afectarán a tu usuario LDAP.</small></div>
+    </div>  
+      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <form action="./funciones/emp-editar-perfil.php" method="POST">
         <div class="modal-body">
@@ -120,20 +123,23 @@ if ($result->num_rows > 0) {
     </div>
   </div>
 </div>';
-} else {
-    // Mensaje si no se encuentra el usuario
-    echo '<div class="alert alert-warning text-center" role="alert">No se encontró el usuario con ID = 1.</div>';
-}
+    } else {
+        // Mensaje si no se encuentra el usuario
+        echo '<div class="alert alert-warning text-center" role="alert">No se encontró el usuario con ID = 1.</div>';
+    }
 
-// Liberar los resultados
-$result->free();
-?>
+    // Liberar los resultados
+    $result->free();
+    ?>
 
 </main>
 <!-- FIN CONTENIDO -->
 
 <?php
 
-function footerjs() { echo ""; }
+function footerjs()
+{
+    echo "";
+}
 include_once('./includes/footer.php');
 ?>

@@ -1,6 +1,9 @@
 <?php
 session_start();
-if (empty($_SESSION['id']) || $_SESSION['tipo'] != 'empresa') { header("Location: index.php"); die(); }
+if (empty($_SESSION['id']) || $_SESSION['tipo'] != 'empresa') {
+    header("Location: index.php?asd");
+    die();
+}
 
 $np = "Inicio";
 $bodyclass = '';
@@ -22,14 +25,16 @@ $tipo = $_SESSION['tipo'];
     <?php
     $id = $_SESSION['id'];
     // Verifica que $id sea un número
-    if (!is_numeric($id)) { die("ID inválido."); }
+    if (!is_numeric($id)) {
+        die("ID inválido.");
+    }
 
     $sql = "SELECT transacciones.fecha, transacciones.descripcion, transacciones.importe, transacciones.ticket
             FROM transacciones
             INNER JOIN usuarios_tarjetas ON usuarios_tarjetas.id = transacciones.id_usuario_tarjeta
             WHERE usuarios_tarjetas.id_usuario = ?
             ORDER BY transacciones.fecha DESC
-            LIMIT 10";
+            LIMIT 5";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $id);
     $stmt->execute();
@@ -50,32 +55,32 @@ $tipo = $_SESSION['tipo'];
 
     $result->free();
     ?>
-
+    <canvas class="my-4 w-100" id="myChart" style="display: block; box-sizing: border-box; height: 287px; width: 681px;"></canvas>
     <div id="grid-container"></div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
             new gridjs.Grid({
                 columns: [{
-                            name: "Fecha",
-                            sort: true
+                        name: "Fecha",
+                        sort: true
+                    },
+                    {
+                        name: "Descripción",
+                        sort: true
+                    },
+                    {
+                        name: "Importe (€)",
+                        sort: {
+                            compare: (a, b) => parseFloat(a) - parseFloat(b) // Comparar como números
                         },
-                        {
-                            name: "Descripción",
-                            sort: true
-                        },
-                        {
-                            name: "Importe (€)",
-                            sort: {
-                                compare: (a, b) => parseFloat(a) - parseFloat(b) // Comparar como números
-                            },
-                            formatter: (cell) => parseFloat(cell).toFixed(2) // Mostrar con dos decimales
-                        },
-                        {
-                            name: "Ticket",
-                            formatter: (cell) => cell ? gridjs.html(`<a href="${cell}" target="_blank">Ticket</a>`) : "No hay ticket"
-                        }
-                    ],
+                        formatter: (cell) => parseFloat(cell).toFixed(2) // Mostrar con dos decimales
+                    },
+                    {
+                        name: "Ticket",
+                        formatter: (cell) => cell ? gridjs.html(`<a href="${cell}" target="_blank">Ticket</a>`) : "No hay ticket"
+                    }
+                ],
                 data: <?php echo json_encode($transacciones, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT); ?>,
                 pagination: false,
                 search: false,
@@ -100,7 +105,57 @@ $tipo = $_SESSION['tipo'];
 <?php
 function footerjs()
 {
-    echo "";
+    echo "
+    <script src='https://cdn.jsdelivr.net/npm/chart.js@4.3.2/dist/chart.umd.js'></script>
+    <script>
+(() => {
+  'use strict'
+
+  // Graphs
+  const ctx = document.getElementById('myChart')
+  // eslint-disable-next-line no-unused-vars
+  const myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: [
+        'Sunday',
+        'Monday',
+        'Tuesday',
+        'Wednesday',
+        'Thursday',
+        'Friday',
+        'Saturday'
+      ],
+      datasets: [{
+        data: [
+          15339,
+          21345,
+          18483,
+          24003,
+          23489,
+          24092,
+          12034
+        ],
+        lineTension: 0,
+        backgroundColor: 'transparent',
+        borderColor: '#007bff',
+        borderWidth: 4,
+        pointBackgroundColor: '#007bff'
+      }]
+    },
+    options: {
+      plugins: {
+        legend: {
+          display: false
+        },
+        tooltip: {
+          boxPadding: 3
+        }
+      }
+    }
+  })
+})();</script>
+    ";
 }
 include_once('./includes/footer.php');
 ?>

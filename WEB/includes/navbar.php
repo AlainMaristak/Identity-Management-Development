@@ -22,8 +22,14 @@
             </li>
             <li class="nav-item">
               <a class="nav-link d-flex align-items-center gap-2" href="./emp-tarjeta-nuevo-gasto.php">
-                <i class="bi bi-wallet2"></i>
+                <i class="bi bi-file-earmark-plus"></i>
                 Nuevo gasto
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link d-flex align-items-center gap-2" href="./emp-cambiar-tarjeta.php">
+                <i class="bi bi-wallet2"></i>
+                Activar tarjeta
               </a>
             </li>
             <li class="nav-item">

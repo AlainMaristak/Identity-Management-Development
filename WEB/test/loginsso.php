@@ -1,6 +1,15 @@
 <?php
-// login.php
- 
+if (isset($_GET['app'])) {
+    $app = $_GET['app'];
+    if ($app != 'tarjetas' && $app != 'otro') {
+        header('Location: ../index.php');
+        die();
+    }
+} else {
+    header('Location: ../index.php');
+    die();
+}
+
 // Incluir el archivo de configuración
 require_once($_SERVER['DOCUMENT_ROOT'] . '/Identity-Management-Development/WEB/test/config.php');
 // Generar una URL de autenticación

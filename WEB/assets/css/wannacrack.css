@@ -3,19 +3,27 @@
 .wcTxtColor1 {
     color: #11071C;
 }
+
 /* Color de fondo */
-.wcBGColor1{
+.wcBGColor1 {
     background-color: #11071C;
 }
+
 /* Botón */
 .wcBtnColor1 {
-    background-color: #11071C; /* Fondo */
-    color: #fff; /* Color del texto */
-    border: 2px solid #11071C; /* Borde */
+    background-color: #11071C;
+    /* Fondo */
+    color: #fff;
+    /* Color del texto */
+    border: 2px solid #11071C;
+    /* Borde */
 }
+
 .wcBtnColor1:hover {
-    background-color: #0e0616; /* Fondo oscuro para hover */
-    border-color: #0e0616; /* Borde oscuro para hover */
+    background-color: #0e0616;
+    /* Fondo oscuro para hover */
+    border-color: #0e0616;
+    /* Borde oscuro para hover */
 }
 
 
@@ -24,124 +32,85 @@
 .wcTxtColor2 {
     color: #bd9ad6;
 }
+
 /* Color de fondo */
-.wcBGColor2{
+.wcBGColor2 {
     background-color: #bd9ad6;
 }
+
 /* Botón */
 .wcBtnColor2 {
-    background-color: #bd9ad6; /* Fondo */
-    color: #fff; /* Color del texto */
-    border: 2px solid #bd9ad6; /* Borde */
+    background-color: #bd9ad6;
+    /* Fondo */
+    color: #fff;
+    /* Color del texto */
+    border: 2px solid #bd9ad6;
+    /* Borde */
 }
 
 .wcBtnColor2:hover {
-    background-color: #a68aab; /* Fondo oscuro para hover */
-    border-color: #a68aab; /* Borde oscuro para hover */
+    background-color: #a68aab;
+    /* Fondo oscuro para hover */
+    border-color: #a68aab;
+    /* Borde oscuro para hover */
 }
 
 
 /*** COLOR 3 ***/
-.wcTxtColor3 { /*Color texto*/
+.wcTxtColor3 {
+    /*Color texto*/
     color: #7522a8;
 }
-.wcBGColor3{
+
+.wcBGColor3 {
     background-color: #7522a8 !important;
 }
+
 /* Botón */
 .wcBtnColor3 {
-    background-color: #7522a8; /* Fondo */
-    color: #fff; /* Color del texto */
-    border: 2px solid #7522a8; /* Borde */
+    background-color: #7522a8;
+    /* Fondo */
+    color: #fff;
+    /* Color del texto */
+    border: 2px solid #7522a8;
+    /* Borde */
 }
 
 .wcBtnColor3:hover {
-    background-color: #641e93; /* Fondo oscuro para hover */
-    border-color: #641e93; /* Borde oscuro para hover */
+    background-color: #641e93;
+    /* Fondo oscuro para hover */
+    border-color: #641e93;
+    /* Borde oscuro para hover */
 }
 
 /*** COLOR 4 ***/
-.wcTxtColor4 { /*Color texto*/
+.wcTxtColor4 {
+    /*Color texto*/
     color: #84858d;
 }
+
 /* Color de fondo */
-.wcBGColor4{
+.wcBGColor4 {
     background-color: #84858d;
 }
+
 /* Botón */
 .wcBtnColor4 {
-    background-color: #84858d; /* Fondo */
-    color: #fff; /* Color del texto */
-    border: 2px solid #84858d; /* Borde */
+    background-color: #84858d;
+    /* Fondo */
+    color: #fff;
+    /* Color del texto */
+    border: 2px solid #84858d;
+    /* Borde */
 }
 
 .wcBtnColor4:hover {
-    background-color: #73757d; /* Fondo oscuro para hover */
-    border-color: #73757d; /* Borde oscuro para hover */
+    background-color: #73757d;
+    /* Fondo oscuro para hover */
+    border-color: #73757d;
+    /* Borde oscuro para hover */
 }
 
-
-/* Estilo del Sidebar
-#sidebar {
-    width: 250px;
-    min-height: 100vh;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 1000;
-    transition: transform 0.3s ease-in-out;
-}
- 
-#main-content {
-    margin-left: 250px; 
-    width: calc(100% - 250px); 
-    transition: margin-left 0.3s ease-in-out, width 0.3s ease-in-out;
-}
- 
-#toggle-sidebar {
-    position: fixed;
-    top: 50%;
-    left: 250px;
-    transform: translateY(-50%);
-    z-index: 1100;
-    background-color: #0d6efd;
-    border: 1px solid #0d6efd;
-    color: white;
-    border-radius: 0 5px 5px 0;
-    padding: 5px;
-    width: 40px;
-    height: 40px;
-    transition: left 0.3s;
-}
- 
-@media (min-width: 992px) {
-    #toggle-sidebar {
-        display: none;
-    }
- 
-    #sidebar {
-        transform: translateX(0);
-    }
- 
-    #main-content {
-        margin-left: 250px;
-        width: calc(100% - 250px);
-    }
-}
- 
-#sidebar.active {
-    transform: translateX(-100%);
-}
- 
-#sidebar.active + #toggle-sidebar {
-    left: 0;
-}
- 
-#sidebar.active + #toggle-sidebar + #main-content {
-    margin-left: 0;
-    width: 100%;
-}
-*/
 
 
 /* Estilos para los cuadrados de las opciones de tarjeta */
@@ -170,7 +139,7 @@
 }
 
 /* Cambiar estilos cuando el radio está seleccionado */
-.form-check-input:checked + .form-check-label {
+.form-check-input:checked+.form-check-label {
     background-color: #dfe0e1;
     /* color: white; */
     border-color: #0d6efd;
@@ -206,42 +175,42 @@
     -webkit-user-select: none;
     -moz-user-select: none;
     user-select: none;
-  }
+}
 
-  @media (min-width: 768px) {
+@media (min-width: 768px) {
     .bd-placeholder-img-lg {
-      font-size: 3.5rem;
+        font-size: 3.5rem;
     }
-  }
+}
 
-  .b-example-divider {
+.b-example-divider {
     width: 100%;
     height: 3rem;
     background-color: rgba(0, 0, 0, .1);
     border: solid rgba(0, 0, 0, .15);
     border-width: 1px 0;
     box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
-  }
+}
 
-  .b-example-vr {
+.b-example-vr {
     flex-shrink: 0;
     width: 1.5rem;
     height: 100vh;
-  }
+}
 
-  .bi {
+.bi {
     vertical-align: -.125em;
     fill: currentColor;
-  }
+}
 
-  .nav-scroller {
+.nav-scroller {
     position: relative;
     z-index: 2;
     height: 2.75rem;
     overflow-y: hidden;
-  }
+}
 
-  .nav-scroller .nav {
+.nav-scroller .nav {
     display: flex;
     flex-wrap: nowrap;
     padding-bottom: 1rem;
@@ -250,9 +219,9 @@
     text-align: center;
     white-space: nowrap;
     -webkit-overflow-scrolling: touch;
-  }
+}
 
-  .btn-bd-primary {
+.btn-bd-primary {
     --bd-violet-bg: #712cf9;
     --bd-violet-rgb: 112.520718, 44.062154, 249.437846;
 
@@ -267,17 +236,26 @@
     --bs-btn-active-color: var(--bs-btn-hover-color);
     --bs-btn-active-bg: #5a23c8;
     --bs-btn-active-border-color: #5a23c8;
-  }
+}
 
-  .bd-mode-toggle {
+.bd-mode-toggle {
     z-index: 1500;
-  }
+}
 
-  .bd-mode-toggle .dropdown-menu .active .bi {
+.bd-mode-toggle .dropdown-menu .active .bi {
     display: block !important;
-  }
+}
 
 
-  html, body {
+html,
+body {
     height: 100%;
-  }
+}
+
+
+
+/*INDEX*/
+.card-option:hover {
+    background-color: #e9ecef;
+    /* Slightly darker than bg-light */
+}

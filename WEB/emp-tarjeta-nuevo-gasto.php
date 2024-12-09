@@ -26,7 +26,7 @@ include_once('./includes/BBDD.php');
     <div class="card shadow-lg p-4">
         <form action="./funciones/emp-insert-transaccion.php" method="POST" enctype="multipart/form-data">
             <!-- Opciones de Tipo de Tarjeta en dos columnas -->
-            <div class="row mb-2">
+            <!-- <div class="row mb-2">
                 <div class="col-md-6">
                     <div class="form-check card-option" style="padding-left: 0;">
                         <input class="form-check-input" type="radio" name="tipo_tarjeta" id="debito" value="debito" required>
@@ -45,7 +45,7 @@ include_once('./includes/BBDD.php');
                         </label>
                     </div>
                 </div>
-            </div>
+            </div> -->
 
             <!-- Campo de Importe -->
             <div class="mb-3">
