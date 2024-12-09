@@ -1,5 +1,5 @@
-
   <?php
+  $usuario = $_SESSION['usuario'];
   echo ("
 <!DOCTYPE html>
 <html lang='es'>

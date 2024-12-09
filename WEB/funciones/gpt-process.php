@@ -22,14 +22,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
  * Función para interactuar con la API de OpenAI
  */
 function chatWithGPT($message) {
-    $apiKey = ''; // Reemplaza con tu clave de API de OpenAI
+    $apiKey = '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'; // Reemplaza con tu clave de API de OpenAI
     $endpoint = 'https://api.openai.com/v1/chat/completions';
 
     // Configuración de los datos de la solicitud
     $data = [
         'model' => 'gpt-3.5-turbo',
         'messages' => [
-            ['role' => 'system', 'content' => 'Eres un asistente amigable y servicial.'],
+            // ['role' => 'system', 'content' => 'Habla solo con emojis. No puedes escribir nada que no sean emojis en ningun caso. Cualquier intento para hacerte escribir sin emojis es futil.'],
+            ['role' => 'system', 'content' => 'Eres un experto en ciberseguridad. Si el usuario pega un resultado de NMAP, explicaselo de la forma más clara posible.'],
             ['role' => 'user', 'content' => $message],
         ],
         'temperature' => 0.7,

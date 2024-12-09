@@ -4,13 +4,13 @@ use Jumbojett\OpenIDConnectClient;
 
 // Configuración de Keycloak
 $oidc = new OpenIDConnectClient(
-    'http://192.168.214.136:8080/realms/wanttocrack', // URL del Realm de Keycloak
-    'xampp-web', // Client ID de Keycloak
-    'F5MaQVnAyUaIOilteFJZw3Tnyn7TFYf5' // Client Secret de Keycloak
+    'http://192.168.52.132:8080/realms/WannaCrack', // URL del Realm de Keycloak
+    'WannaCrackWEB', // Client ID de Keycloak
+    'PId2ArAPRk8dbd2DhrluH2FfUXzGtsVd' // Client Secret de Keycloak
 );
 
 // Establecer la URL de redirección (debe coincidir con la configurada en Keycloak)
-$oidc->setRedirectURL('http://192.168.214.1/Identity-Management-Development/WEB/lib/keycloak_login.php');
+$oidc->setRedirectURL('http://10.11.0.124/Identity-Management-Development/WEB/lib/keycloak_login.php');
 
 // Si no hay un código (parámetro `code`), redirige al flujo de autenticación de Keycloak
 if (!isset($_GET['code'])) {
@@ -22,10 +22,10 @@ if (!isset($_GET['code'])) {
 // Obtener el token de acceso después de la autenticación
 try {
     // Esto solicita el token de acceso usando el código de autorización
-    $oidc->getAccessToken();
+    print_r($oidc->getAccessToken());
 
     // Verificar si el token fue obtenido correctamente
-    $access_token = $oidc->getAccessToken();
+    echo $access_token = $oidc->getAccessToken();
     if (!$access_token) {
         echo "No se pudo obtener el token de acceso.";
         exit;

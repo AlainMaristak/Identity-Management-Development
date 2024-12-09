@@ -1,8 +1,8 @@
-RewriteEngine On
-RewriteBase /Identity-Management-Development/WEB/
+# Activar mod_rewrite
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /
 
-# Reescribir "Inicio" para que apunte a "index.php"
-RewriteRule ^Inicio$ index.php [L]
-
-# Reescribir "panel" para que apunte a "emp-panel.php"
-RewriteRule ^panel$ emp-panel.php [L]
+    # Redirigir errores 404 a una página personalizada
+    ErrorDocument 404 /404.html
+</IfModule>

@@ -8,7 +8,8 @@
 <body>
     <h1>Bienvenido</h1>
     <p>Haga clic en el botón para iniciar sesión con SSO:</p>
-    <form action="./lib/keycloak_login.php" method="GET">
+    <!-- <form action="./lib/keycloak_login.php" method="GET"> -->
+    <form action="./test/loginsso.php" method="GET">
         <button type="submit">Iniciar sesión con SSO</button>
     </form>
 </body>
