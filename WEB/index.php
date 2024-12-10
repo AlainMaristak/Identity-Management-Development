@@ -5,43 +5,36 @@ session_unset();
 session_destroy();
 
 $np = 'Login';
-$bodyclass = 'wcBGColor2 WCRaton';
+$bodyclass = '';
 include_once('./includes/head.php');
 ?>
 
-<div class="snow-overlay"></div>
 
-<div class="container d-flex justify-content-center align-items-center vh-100">
-    <div class="card p-4 shadow" style="width: 100%; max-width: 400px;">
-        <h3 class="text-center mb-1">Iniciar Sesión en</h3>
-        <h4 class="text-center mb-4">WannaCrack</h4>
-        <form method="POST" action="./funciones/login.php">
-            <!-- Email input con form-floating -->
-            <div class="form-floating mb-4">
-                <input type="email" id="formLoginCorreo" class="form-control" placeholder="Correo electrónico" name="correo" required>
-                <label for="formLoginCorreo">Correo electrónico</label>
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 70vh;">
+    <div class="card p-4 shadow w-100" style="max-width: 800px; height: auto;">
+        <h3 class="text-center mb-4">Iniciar Sesión en WannaCrack</h3>
+        <div class="row">
+            <div class="col-md-6 d-flex">
+                <!-- Botón 1 -->
+                <button
+                    class="btn btn-primary d-flex align-items-center justify-content-between p-3 rounded shadow-sm w-100"
+                    onclick="window.location.href='./test/loginsso.php?app=tarjetas';"
+                    style="font-size: 1.2rem;">
+                    <span>APLICACIÓN DE GESTIÓN DE TARJETAS Y TRANSACCIONES</span>
+                    <i class="bi bi-arrow-right-circle-fill fs-3"></i>
+                </button>
             </div>
-
-            <!-- Password input con form-floating -->
-            <div class="form-floating mb-4">
-                <input type="password" id="formLoginContrasena" class="form-control" placeholder="Contraseña" name="contrasena" required>
-                <label for="formLoginContrasena">Contraseña</label>
+            <div class="col-md-6 d-flex">
+                <!-- Botón 2 -->
+                <button
+                    class="btn btn-secondary d-flex align-items-center justify-content-between p-3 rounded shadow-sm w-100"
+                    onclick="window.location.href='./test/loginsso.php?app=otro';"
+                    style="font-size: 1.2rem;">
+                    <span>OTRA COSA</span>
+                    <i class="bi bi-arrow-right-circle-fill fs-3"></i>
+                </button>
             </div>
-
-            <!-- Botón de inicio de sesión -->
-            <button type="submit" class="btn btn-primary w-100 mb-2 wcBtnColor3">Iniciar sesión</button>
-        </form>
-
-        <!-- Divider con línea y texto "OR" en el centro -->
-        <div class="d-flex align-items-center my-4">
-            <hr class="flex-grow-1">
-            <span class="text-center mx-3 text-muted fw-bold">o</span>
-            <hr class="flex-grow-1">
         </div>
-
-        <!-- Botón de inicio de sesión con otra opción (ejemplo de red social) -->
-        <button type="button" class="btn btn-outline-secondary w-100">Iniciar sesión con SSO</button>
-
     </div>
 </div>
 

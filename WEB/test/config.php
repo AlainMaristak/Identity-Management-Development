@@ -1,15 +1,15 @@
 <?php
 if ($app == 'tarjetas') {
     // Configuración de Keycloak para la aplicación de tarjetas
-    $realm = 'wanttocrack';  // Nombre del realm
-    $client_id = 'xampp-web';  // ID del cliente registrado en Keycloak
-    $client_secret = 'F5MaQVnAyUaIOilteFJZw3Tnyn7TFYf5';  // Secreto del cliente
+    $realm = 'WannaCrack';  // Nombre del realm
+    $client_id = 'WannaCrackWEB';  // ID del cliente registrado en Keycloak
+    $client_secret = 'ContrasenaParaElClientDeKeyCloack';  // Secreto del cliente
     $redirect_uri = 'http://localhost/Identity-Management-Development/WEB/test/callback.php';  // URL de callback
     $redirect_uriLogOut = 'http://localhost/Identity-Management-Development/WEB/test/loginsso.php'; // URL del logout
 } else if ($app == 'otro') {
     $realm = 'wanttocrack';  // Nombre del realm
     $client_id = 'xampp-web';  // ID del cliente registrado en Keycloak
-    $client_secret = 'F5MaQVnAyUaIOilteFJZw3Tnyn7TFYf5';  // Secreto del cliente
+    $client_secret = 'ContrasenaParaElClientDeKeyCloack';  // Secreto del cliente
     $redirect_uri = 'http://localhost/Identity-Management-Development/WEB/test/callback.php';  // URL de callback
     $redirect_uriLogOut = 'http://localhost/Identity-Management-Development/WEB/test/loginsso.php'; // URL del logout
 }
