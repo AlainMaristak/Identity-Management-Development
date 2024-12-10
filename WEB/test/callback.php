@@ -1,29 +1,6 @@
 <?php
 session_start();
-
-// Obtener la URL actual
-$url = "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-
-// Parsear la URL y obtener los componentes de consulta
-$parsedUrl = parse_url($url);
-
-if (isset($parsedUrl['query'])) {
-    // Convertir la cadena de consulta en un array asociativo
-    parse_str($parsedUrl['query'], $queryParams);
-
-    // Verificar si existe el parámetro 'iss'
-    if (isset($queryParams['iss'])) {
-        // Obtener el valor de 'iss' y extraer el texto deseado
-        $iss = urldecode($queryParams['iss']);
-        $parts = explode('/', $iss);
-        $realm = end($parts); // Devolver la última parte de la URL
-    }
-}
-
-$app = $realm == 'wanttocrack' ? 'tarjetas' : ($realm == 'ElRealmDeLaOtraAplicacion' ? 'otro' : 'error');
-
-// Incluir el archivo de configuración
-require_once($_SERVER['DOCUMENT_ROOT'] . '/Identity-Management-Development/WEB/test/config.php');
+require_once './config.php';
 
 // Verificar si el código de autenticación está presente en la URL
 if (isset($_GET['code'])) {

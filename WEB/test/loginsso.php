@@ -1,10 +1,12 @@
 <?php
+session_start();
 if (isset($_GET['app'])) {
     $app = $_GET['app'];
     if ($app != 'tarjetas' && $app != 'otro') {
         header('Location: ../index.php');
         die();
     }
+    $_SESSION['app'] = $app;
 } else {
     header('Location: ../index.php');
     die();
