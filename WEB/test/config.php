@@ -1,18 +1,21 @@
 <?php
-$app = $_SESSION['app'];
+if (session_status() == PHP_SESSION_NONE) { session_start(); }$app = $_SESSION['app'];
 if ($app == 'tarjetas') {
     // Configuración de Keycloak para la aplicación de tarjetas
     $realm = 'WannaCrack';  // Nombre del realm
     $client_id = 'WannaCrackWEB';  // ID del cliente registrado en Keycloak
     $client_secret = '9ywIH78C5bjknnaa552QpvIiLlxxmRrv';  // Secreto del cliente
-    $redirect_uri = 'http://localhost/Identity-Management-Development/WEB/test/callback.php';  // URL de callback
-    $redirect_uriLogOut = 'http://localhost/Identity-Management-Development/WEB/test/loginsso.php'; // URL del logout
+    $redirect_uri = 'http://10.11.0.21/test/callback.php';  // URL de callback
+    $redirect_uriLogOut = 'http://10.11.0.21/test/loginsso.php'; // URL del logout
 } else if ($app == 'otro') {
     $realm = 'wanttocrack';  // Nombre del realm
     $client_id = 'xampp-web';  // ID del cliente registrado en Keycloak
     $client_secret = 'ContrasenaParaElClientDeKeyCloack';  // Secreto del cliente
     $redirect_uri = 'http://localhost/Identity-Management-Development/WEB/test/callback.php';  // URL de callback
     $redirect_uriLogOut = 'http://localhost/Identity-Management-Development/WEB/test/loginsso.php'; // URL del logout
+} else {
+    header('Location: ../index.php?errorconfig=0' . $app . '0');
+    die();
 }
 // Dirección IP de Keycloak
 $ip = '192.168.52.132:8080'; // Dirección IP y puerto del servidor Keycloak

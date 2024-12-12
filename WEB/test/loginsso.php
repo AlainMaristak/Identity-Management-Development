@@ -13,7 +13,7 @@ if (isset($_GET['app'])) {
 }
 
 // Incluir el archivo de configuración
-require_once($_SERVER['DOCUMENT_ROOT'] . '/Identity-Management-Development/WEB/test/config.php');
+require_once 'config.php';
 // Generar una URL de autenticación
 $auth_url = $keycloak_url . '?response_type=code&client_id=' . $client_id . '&redirect_uri=' . urlencode($redirect_uri);
  

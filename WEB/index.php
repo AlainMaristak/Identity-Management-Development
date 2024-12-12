@@ -9,7 +9,6 @@ $bodyclass = '';
 include_once('./includes/head.php');
 ?>
 
-
 <div class="container d-flex justify-content-center align-items-center" style="min-height: 70vh;">
     <div class="card p-4 shadow w-100" style="max-width: 800px; height: auto;">
         <h3 class="text-center mb-4">Iniciar Sesión en WannaCrack</h3>

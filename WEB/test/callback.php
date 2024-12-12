@@ -1,11 +1,16 @@
 <?php
+
+ini_set('display_errors', 1);  // Habilita la visualización de errores
+error_reporting(E_ALL);         // Muestra todos los tipos de errores
+
+
 session_start();
+
 require_once './config.php';
 
 // Verificar si el código de autenticación está presente en la URL
 if (isset($_GET['code'])) {
     $code = $_GET['code'];
-
     // Preparar los datos para el POST
     $data = [
         'grant_type' => 'authorization_code',
