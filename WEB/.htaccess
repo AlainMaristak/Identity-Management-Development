@@ -1,10 +1,13 @@
 RewriteEngine On
 
-# Bloquear el acceso a todo excepto a la carpeta WEB
-# RewriteCond %{REQUEST_URI} !^/Identity-Management-Development/WEB/
-# RewriteRule ^ - [F,L]
-
-# Redirigir errores 404 a una página personalizada
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^.*$ /Identity-Management-Development/WEB/404.html [L]
+
+# <Files .htaccess>
+#   Order Allow,Deny
+#   Deny from all
+# </Files>
+
+# ErrorDocument 404 /LWeb/Web/html/404.html
+# ErrorDocument 403 /LWeb/Web/html/forbidden.html

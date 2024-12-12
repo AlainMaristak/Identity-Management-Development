@@ -1,8 +1,8 @@
 <?php
 //Limpiando las sesiones
 session_start();
-session_unset();
-session_destroy();
+// session_unset();
+// session_destroy();
 
 $np = 'Login';
 $bodyclass = '';
@@ -17,7 +17,7 @@ include_once('./includes/head.php');
                 <!-- Botón 1 -->
                 <button
                     class="btn btn-primary d-flex align-items-center justify-content-between p-3 rounded shadow-sm w-100"
-                    onclick="window.location.href='./test/loginsso.php?app=tarjetas';"
+                    onclick="window.location.href='./keycloack/loginsso.php?app=tarjetas';"
                     style="font-size: 1.2rem;">
                     <span>APLICACIÓN DE GESTIÓN DE TARJETAS Y TRANSACCIONES</span>
                     <i class="bi bi-arrow-right-circle-fill fs-3"></i>
@@ -27,7 +27,7 @@ include_once('./includes/head.php');
                 <!-- Botón 2 -->
                 <button
                     class="btn btn-secondary d-flex align-items-center justify-content-between p-3 rounded shadow-sm w-100"
-                    onclick="window.location.href='./test/loginsso.php?app=otro';"
+                    onclick="window.location.href='./keycloack/loginsso.php?app=otro';"
                     style="font-size: 1.2rem;">
                     <span>OTRA COSA</span>
                     <i class="bi bi-arrow-right-circle-fill fs-3"></i>
