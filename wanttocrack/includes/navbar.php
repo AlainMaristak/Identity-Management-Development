@@ -83,7 +83,7 @@
 
           <ul class="nav flex-column mb-auto">
             <li class="nav-item">
-              <a class="nav-link d-flex align-items-center gap-2" href="./funciones/salir.php">
+              <a class="nav-link d-flex align-items-center gap-2" href="./funciones/salir_tarjetas.php">
                   <i class="bi bi-door-closed"></i>
                 Cerrar sesión
               </a>
