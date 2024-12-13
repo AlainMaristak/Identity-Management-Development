@@ -1,8 +1,8 @@
   <?php
-  $current_page = basename($_SERVER['PHP_SELF']);
-  if ($current_page !== 'index.php' && $current_page !== 'index_original.php') { $usuario = $_SESSION['usuario']; }
+$current_page = basename($_SERVER['PHP_SELF']);
+if ($current_page !== 'index.php' && $current_page !== 'index_original.php') { $usuario = $_SESSION['usuario']; }
 
-  echo ("
+echo ("
 <!DOCTYPE html>
 <html lang='es'>
 <head>

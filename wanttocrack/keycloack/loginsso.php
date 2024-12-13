@@ -1,5 +1,6 @@
 <?php
 session_start();
+$aplicacion = "logginSSO";
 if (isset($_GET['app'])) {
     $app = $_GET['app'];
     if ($app != 'tarjetas' && $app != 'otro') {
@@ -21,9 +22,6 @@ $auth_url = $keycloak_url . '?response_type=code&client_id=' . $client_id . '&re
 if (!isset($_SESSION['access_token'])) {
     header('Location: ' . $auth_url);
     exit;
-} else {
-    echo 'Token: ' . $_SESSION['access_token'];
-    die();
 }
 
 // Si ya existe el token, puedes redirigir al dashboard u otra página

@@ -1,4 +1,7 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 session_start();
 if (empty($_SESSION['id']) || $_SESSION['tipo'] != 'empresa') {
   header("Location: index.php?asd");
@@ -10,7 +13,7 @@ $bodyclass = '';
 include_once('./includes/head.php');
 include_once('./includes/cabecera.php');
 include_once('./includes/navbar.php');
-include_once('./includes/BBDD.php');
+include_once('./includes/bbdd.php');
 
 $usuario = $_SESSION['usuario'];
 $nombre_empresa = $_SESSION['nombre_empresa'];

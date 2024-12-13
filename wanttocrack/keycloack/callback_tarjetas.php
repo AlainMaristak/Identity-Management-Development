@@ -1,4 +1,8 @@
 <?php
+
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 session_start();
 require_once './config_tarjetas.php';
 
@@ -27,8 +31,12 @@ if (isset($_GET['code'])) {
     $response_data = json_decode($response, true);
 
     // Mostrar la respuesta completa para depuración
-    // echo "<h3>Respuesta del Token:</h3>";
-    // echo "<pre>" . print_r($response_data, true) . "</pre>";
+    echo "<h3>Respuesta del Token:</h3>";
+    echo "<pre>" . print_r($response_data, true) . "</pre>";
+
+echo "datos obtenidos";
+die();
+
 
     // Verificar si se obtuvo un token
     if (isset($response_data['access_token'])) {

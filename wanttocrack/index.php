@@ -1,8 +1,8 @@
 <?php
 //Limpiando las sesiones
 session_start();
-// session_unset();
-// session_destroy();
+session_unset();
+session_destroy();
 
 $np = 'Login';
 $bodyclass = '';
