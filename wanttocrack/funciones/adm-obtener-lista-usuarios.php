@@ -2,11 +2,12 @@
 session_start();
 
 if (!isset($_SESSION['access_token']) || $_SESSION['tipo'] != "admin") {
-    header("Location: ../404.html");
+    header("Location: ./404.html");
     exit();
 }
 
-require_once('../keycloack2/config_tarjetas.php');
+require_once('./keycloack2/config_tarjetas.php');
+
 // Función para obtener el token de acceso
 function obtenerTokenDeAcceso($token_url, $client_id, $client_secret)
 {
@@ -22,7 +23,7 @@ function obtenerTokenDeAcceso($token_url, $client_id, $client_secret)
         'Content-Type: application/x-www-form-urlencoded',
     ]);
 
-    // Deshabilitar validación del certificado (no recomendado en producción)
+    // Deshabilitar validación del certificado
     curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
     curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
 
@@ -32,8 +33,6 @@ function obtenerTokenDeAcceso($token_url, $client_id, $client_secret)
         throw new Exception('Error al obtener el token de acceso: ' . curl_error($ch));
     }
     curl_close($ch);
-    echo "Response: ";
-    print_r($response);
 
     $data = json_decode($response, true);
     if (isset($data['access_token'])) {
@@ -42,7 +41,6 @@ function obtenerTokenDeAcceso($token_url, $client_id, $client_secret)
         throw new Exception('No se pudo obtener el token de acceso.');
     }
 }
-
 
 // Función para obtener la lista de usuarios
 function obtenerUsuarios($users_url, $access_token)
@@ -73,18 +71,14 @@ function obtenerUsuarios($users_url, $access_token)
     }
 }
 
-
 try {
     // Obtener el token de acceso
     $access_token = obtenerTokenDeAcceso($token_url, $client_id, $client_secret);
 
     // Obtener la lista de usuarios
     $usuarios = obtenerUsuarios($users_url, $access_token);
-    // Devolver los usuarios en formato JSON
-    header('Content-Type: application/json');
-    echo json_encode($usuarios);
+
 } catch (Exception $e) {
-    // Devolver un error en formato JSON
-    http_response_code(500);
-    echo json_encode(['error' => htmlspecialchars($e->getMessage())]);
+    $usuarios = [];
+    $error = $e->getMessage();
 }
