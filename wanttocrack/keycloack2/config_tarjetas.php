@@ -16,4 +16,3 @@ $token_url = 'http://' . $ip . '/realms/' . $realm . '/protocol/openid-connect/t
 $keycloak_logout_url = 'http://' . $ip . '/realms/' . $realm . '/protocol/openid-connect/logout?redirect_uri=' . urlencode($redirect_uriLogOut);
 $users_url = 'http://' . $ip . '/admin/realms/' . $realm . '/users';
 
-echo "logout: " . $keycloak_logout_url;

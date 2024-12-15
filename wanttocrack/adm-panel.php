@@ -1,10 +1,8 @@
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
 
 session_start();
-if (empty($_SESSION['usuario']) || $_SESSION['tipo'] != 'empresa') {
-  header("Location: index.php?EmpresaPanel");
+if (empty($_SESSION['usuario']) || $_SESSION['tipo'] != 'admin') {
+  header("Location: index.php?PanelAdmin");
   die();
 }
 

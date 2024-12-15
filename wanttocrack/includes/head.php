@@ -1,6 +1,6 @@
   <?php
 $current_page = basename($_SERVER['PHP_SELF']);
-if ($current_page !== 'index.php' && $current_page !== 'index_original.php') { $usuario = $_SESSION['usuario']; }
+if ($current_page !== 'index.php' && $current_page !== 'index_original.php') { $usuario = $_SESSION['usuario']; $tipo = $_SESSION['tipo']; }
 
 echo ("
 <!DOCTYPE html>

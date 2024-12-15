@@ -1,6 +1,6 @@
 <?php
 session_start();
-if (empty($_SESSION['id']) || $_SESSION['tipo'] != 'empresa') {
+if (empty($_SESSION['usuario']) || $_SESSION['tipo'] != 'admin') {
     header("Location: index.php");
     die();
 }

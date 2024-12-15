@@ -80,28 +80,32 @@ if (isset($_GET['code'])) {
             }
  
             // Determinar el rol
-            $role = 'Empresa';
+            $role = 'empresa';
             if (in_array('Admin', $roles)) {
-                $role = 'Admin';
+                $role = 'admin';
             }
  
             // Guardamos en sesión
             $_SESSION["username"] = $username;
-            $_SESSION["role"] = $role;
+            $_SESSION["tipo"] = $role;
             $_SESSION["email"] = $email;
             $_SESSION["given_name"] = $givenName;
             $_SESSION["family_name"] = $familyName;
             $_SESSION["auth_time"] = $inicioSesionHora;
 
 	        $_SESSION['id'] = '1';
-	        $_SESSION['tipo'] = 'empresa';
+	        // $_SESSION['tipo'] = 'empresa';
 	        $_SESSION['usuario'] = $username;
 	        $_SESSION['nombre_empresa'] = 'Wanna Crack';
-            
-            // Redirigir a la página de login
-            die();
-            header('Location: ../emp-panel.php');
-            exit;
+
+            if ($role == 'admin') {
+                header('Location: ../adm-panel.php');
+                exit;
+            } else if ($role == 'empresa') {
+                header('Location: ../emp-panel.php');
+                exit;
+            }
+
         } else {
             echo '<h3>Error:</h3>';
             echo 'El token JWT no tiene el formato esperado.';
