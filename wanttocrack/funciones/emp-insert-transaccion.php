@@ -54,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             INNER JOIN tarjetas ON tarjetas.id = usuarios_tarjetas.id_tarjeta
             WHERE tarjetas.tipo = ? AND usuarios_tarjetas.id_usuario = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param('s', $num_tipo_tarjeta);
+    $stmt->bind_param('si', $num_tipo_tarjeta, $id_usuario);
     $stmt->execute();
     $result = $stmt->get_result();
 
