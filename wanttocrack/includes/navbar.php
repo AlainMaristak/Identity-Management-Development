@@ -55,7 +55,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link d-flex align-items-center gap-2" href="./adm-analisis.php">
+            <a class="nav-link d-flex align-items-center gap-2" href="./adm-historial-transacciones.php">
               <i class="bi bi-clock-history"></i>
               Transacciones
             </a>

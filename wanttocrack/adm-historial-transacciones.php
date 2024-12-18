@@ -4,8 +4,8 @@ session_start();
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-if (empty($_SESSION['usuario']) || $_SESSION['tipo'] != 'empresa') {
-    header("Location: index.php");
+if (empty($_SESSION['usuario']) || $_SESSION['tipo'] != 'admin') {
+    header("Location: index.php?PanelHistorico");
     die();
 }
 $np = "Historial de transacciones";
@@ -96,7 +96,7 @@ $tipo = $_SESSION['tipo'];
             fecha_inicio = "", fecha_fin = "", precio_min = "", precio_max = ""
         } = filtros;
 
-        fetch("./funciones/emp-datos-historial-transacciones.php", {
+        fetch("./funciones/adm-datos-historial-transacciones.php", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -117,6 +117,10 @@ $tipo = $_SESSION['tipo'];
                 // Crear la tabla con Grid.js
                 grid = new gridjs.Grid({
                     columns: [{
+                            name: "Usuario", // Columna de Usuario
+                            sort: true
+                        },
+                        {
                             name: "Fecha",
                             sort: true
                         },
@@ -133,11 +137,14 @@ $tipo = $_SESSION['tipo'];
                         },
                         {
                             name: "Ticket",
-                            formatter: (cell) => cell ?
-                                gridjs.html(`<a href="${cell}" target="_blank">Ticket</a>`) : "No hay ticket"
+                            formatter: (cell) =>
+                                cell ?
+                                gridjs.html(`<a href="${cell}" target="_blank">Ticket</a>`) :
+                                "No hay ticket"
                         }
                     ],
                     data: data.transacciones.map(transaccion => [
+                        transaccion.usuario, // Asegúrate de que este campo está en el JSON
                         transaccion.fecha,
                         transaccion.descripcion,
                         parseFloat(transaccion.importe).toFixed(2),
@@ -154,11 +161,8 @@ $tipo = $_SESSION['tipo'];
                         },
                         pagination: {
                             showing: 'Mostrando del',
-                            // 1
                             to: 'al',
-                            // 10
                             of: 'de un total de',
-                            // 20
                             previous: 'Anterior',
                             next: 'Siguiente',
                             results: () => 'registros',

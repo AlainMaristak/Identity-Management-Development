@@ -1,16 +1,15 @@
 <?php
 session_start();
-if (empty($_SESSION['id']) || $_SESSION['tipo'] != 'empresa') {
-    header("Location: ../index.php");
+
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+if (empty($_SESSION['tipo']) || $_SESSION['tipo'] != 'admin') {
+    header("Location: ../index.php?funcionHistorico");
     die();
 }
 
 include_once('../includes/bbdd.php');
-
-$id = $_SESSION['id'];
-if (!is_numeric($id)) {
-    die("ID inválido.");
-}
 
 // Recibir los filtros desde el frontend
 $data = json_decode(file_get_contents("php://input"), true);
@@ -20,14 +19,16 @@ $precio_min = $data['precio_min'] ?? null;
 $precio_max = $data['precio_max'] ?? null;
 
 // Construir consulta con filtros
-$sql = "SELECT transacciones.fecha, transacciones.descripcion, transacciones.importe, transacciones.ticket
+$sql = "SELECT transacciones.fecha, transacciones.descripcion, transacciones.importe, transacciones.ticket, usuarios.usuario
         FROM transacciones
         INNER JOIN usuarios_tarjetas ON usuarios_tarjetas.id = transacciones.id_usuario_tarjeta
-        WHERE usuarios_tarjetas.id_usuario = ?";
+        INNER JOIN usuarios ON usuarios.id = usuarios_tarjetas.id_usuario
+        WHERE 1=1"; // El WHERE 1=1 facilita agregar condiciones dinámicamente
 
-$types = "i";
-$params = [$id];
+$types = "";
+$params = [];
 
+// Agregar filtros dinámicos
 if ($fecha_inicio) {
     $sql .= " AND transacciones.fecha >= ?";
     $types .= "s";
@@ -51,7 +52,11 @@ if ($precio_max) {
 
 $sql .= " ORDER BY transacciones.fecha DESC";
 $stmt = $conn->prepare($sql);
-$stmt->bind_param($types, ...$params);
+
+// Solo asignar parámetros si existen
+if (!empty($types)) {
+    $stmt->bind_param($types, ...$params);
+}
 $stmt->execute();
 $result = $stmt->get_result();
 

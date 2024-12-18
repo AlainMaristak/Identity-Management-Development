@@ -2,20 +2,20 @@
 session_start();
 if (empty($_SESSION['id']) || $_SESSION['tipo'] != 'empresa') { header("Location: index.php"); exit(); }
 
-$nombre_empresa = $_SESSION['nombre_empresa'];
-$uploadDir = '../tickets/' . $nombre_empresa . '/'; // Directorio para guardar los archivos
+$usuario = $_SESSION['usuario'];
+$uploadDir = '../tickets/' . $usuario . '/'; // Directorio para guardar los archivos
 $allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'application/pdf']; // Tipos de archivos permitidos
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $tipoTarjeta = $_POST['tipo_tarjeta'] ?? null;
+    // $tipoTarjeta = $_POST['tipo_tarjeta'] ?? null;
     $importe = $_POST['importe'] ?? null;
     $descripcion = $_POST['descripcion'] ?? null;
     $archivo = $_FILES['archivo'] ?? null;
 
     // Validar campos obligatorios
-    if (!$tipoTarjeta || !$importe || !$descripcion) {
-        die('Error: Todos los campos son obligatorios.');
-    }
+    // if (!$tipoTarjeta || !$importe || !$descripcion) {
+    //     die('Error: Todos los campos son obligatorios.');
+    // }
 
     if (!is_numeric($importe) || $importe <= 0) {
         die('Error: El importe debe ser un número mayor a 0.');
@@ -44,14 +44,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     include_once('../includes/bbdd.php');
 
     $id_usuario = $_SESSION['id'];
-    $num_tipo_tarjeta = $tipoTarjeta === 'debito' ? '1' : ($tipoTarjeta === 'credito' ? '2' : null);
-    if ($num_tipo_tarjeta === null) {
-        die('Error: Tipo de tarjeta no válido.');
-    }
+    $num_tipo_tarjeta = $importe < 500 ? '1' : '2';
+    // $num_tipo_tarjeta = $tipoTarjeta === 'debito' ? '1' : ($tipoTarjeta === 'credito' ? '2' : null);
+    // if ($num_tipo_tarjeta === null) {
+    //     die('Error: Tipo de tarjeta no válido.');
+    // }
 
     $sql = "SELECT usuarios_tarjetas.id FROM `usuarios_tarjetas`
             INNER JOIN tarjetas ON tarjetas.id = usuarios_tarjetas.id_tarjeta
-            WHERE tarjetas.tipo = ?";
+            WHERE tarjetas.tipo = ? AND usuarios_tarjetas.id_usuario = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param('s', $num_tipo_tarjeta);
     $stmt->execute();

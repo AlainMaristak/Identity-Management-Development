@@ -1,8 +1,8 @@
 <?php
 session_start();
 if (empty($_SESSION['usuario']) || $_SESSION['tipo'] != 'admin') {
-    header("Location: index.php?lista-usuarios");
-    die();
+  header("Location: index.php?lista-usuarios");
+  die();
 }
 
 $np = "Inicio";
@@ -41,16 +41,14 @@ include_once('./funciones/adm-obtener-lista-usuarios.php');
 <script src="https://unpkg.com/gridjs/dist/gridjs.umd.js"></script>
 <link href="https://unpkg.com/gridjs/dist/theme/mermaid.min.css" rel="stylesheet" />
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    // Datos de usuarios pasados desde PHP a JavaScript
-    const usuarios = <?php echo json_encode($usuarios, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT); ?>;
+  // Declarar la función en el ámbito global
+  window.toggleUserStatus = (userId, currentStatus) => {
+    console.log('Botón clicado, ID:', userId, 'Estado actual:', currentStatus);
 
-    // Función para actualizar el estado de un usuario
-    const toggleUserStatus = (userId, currentStatus) => {
-      // Determinar el nuevo estado (invertir el actual)
-      const newStatus = !currentStatus;
-      
-      fetch(`./funciones/adm-modificar-disponibilidad.php?id=${userId}&enabled=${newStatus}`, {
+    // Determinar el nuevo estado (invertir el actual)
+    const newStatus = !currentStatus;
+
+    fetch(`./funciones/adm-modificar-disponibilidad.php?id=${userId}&enabled=${newStatus}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -59,52 +57,66 @@ include_once('./funciones/adm-obtener-lista-usuarios.php');
       .then(response => response.json())
       .then(data => {
         if (data.status === 'success') {
-          alert(data.message); // Mensaje de éxito
-          // Actualizar el botón para reflejar el nuevo estado
-          const button = document.getElementById(`status-button-${userId}`);
-          button.textContent = newStatus ? 'Deshabilitar' : 'Habilitar';
-          button.classList.toggle('btn-success', newStatus);
-          button.classList.toggle('btn-danger', !newStatus);
+            // alert(data.message); // Mostrar mensaje de éxito
+            location.reload(); // Recargar la página
         } else {
-          alert(data.message); // Mensaje de error
+            alert(`Error: ${data.message}`); // Mostrar error si ocurre
         }
       })
       .catch(error => {
         alert('Error al cambiar el estado del usuario.');
         console.error(error);
       });
-    };
+  };
+
+  document.addEventListener('DOMContentLoaded', function() {
+    // Datos de usuarios pasados desde PHP a JavaScript
+    const usuarios = <?php echo json_encode($usuarios, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT); ?>;
 
     // Crear la tabla Grid.js
     new gridjs.Grid({
-      columns: [
-        { name: "ID", sort: true },
-        { name: "Nombre de Usuario", sort: true },
-        { name: "Nombre", sort: true },
-        { name: "Apellido", sort: true },
-        { name: "Email", sort: true },
+      columns: [{
+          name: "ID",
+          hidden: true
+        }, // Columna de ID oculta
+        {
+          name: "Nombre de Usuario",
+          sort: true
+        },
+        {
+          name: "Nombre",
+          sort: true
+        },
+        {
+          name: "Apellido",
+          sort: true
+        },
+        {
+          name: "Email",
+          sort: true
+        },
         {
           name: "Habilitado",
           formatter: (cell, row) => {
-            const userId = row.cells[0].data;
+            const userId = row.cells[0].data; // Obtiene el ID correcto
             const isEnabled = cell; // true o false
             return gridjs.html(`
-              <button id="status-button-${userId}" 
-                      class="btn ${isEnabled ? 'btn-success' : 'btn-danger'}" 
-                      onclick="toggleUserStatus(${userId}, ${isEnabled})">
-                ${isEnabled ? 'Deshabilitar' : 'Habilitar'}
-              </button>
-            `);
+    <button id="status-button-${userId}" 
+            class="btn ${isEnabled ? 'btn-success' : 'btn-danger'}" 
+            onclick="toggleUserStatus('${userId}', ${isEnabled})">
+      ${isEnabled ? 'Deshabilitar' : 'Habilitar'}
+    </button>
+  `);
           }
         }
       ],
       data: usuarios.map(usuario => [
-        usuario.id,
-        usuario.username,
-        usuario.firstName ?? '',
-        usuario.lastName ?? '',
-        usuario.email ?? 'No especificado',
-        usuario.enabled, // Valor booleano para habilitado
+        usuario.id, // Primera columna: ID (oculta)
+        usuario.username, // Segunda columna: Nombre de usuario
+        usuario.firstName ?? '', // Tercera columna: Nombre
+        usuario.lastName ?? '', // Cuarta columna: Apellido
+        usuario.email ?? 'No especificado', // Quinta columna: Email
+        usuario.enabled // Sexta columna: Estado habilitado
       ]),
       pagination: {
         limit: 5
@@ -125,19 +137,6 @@ include_once('./funciones/adm-obtener-lista-usuarios.php');
     }).render(document.getElementById("grid-container"));
   });
 </script>
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  // Ensure the output is properly encoded
-  const usuarios = <?php echo json_encode($usuarios, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT); ?>;
-  console.log(usuarios); // Check the structure of the output
-  // Continue with your Grid.js logic
-});
-</script>
 <?php
-// FOOTER
-function footerjs()
-{
-  echo "";
-}
 include_once('./includes/footer.php');
 ?>

@@ -1,33 +1,24 @@
 <?php
 session_start(); // Iniciar la sesión
+
 // Verificar si la sesión está activa
 if (!isset($_SESSION['access_token']) || $_SESSION['tipo'] != "admin") {
     header("Location: ../404.html");
     exit();
 }
+
 // Incluir el archivo de configuración
 require_once('../keycloack2/config_tarjetas.php');
-// Verificar que se recibió una solicitud PUT
-// if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
-//     // Leer el cuerpo de la solicitud
-//     $input = file_get_contents('php://input');
-//     // Decodificar el JSON recibido
-//     $data = json_decode($input, true);
-
-
-    // // Capturar el ID del usuario
-    // $userId = $data['userId'] ?? null;
-
 
 // Comprobar si se enviaron los datos del formulario
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
     // Obtener los valores del formulario
     $userId = $_GET['id'];
+    $enabled = filter_var($_GET['enabled'], FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
 
-
-    // Validar que el ID del usuario esté presente
-    if (!$userId) {
-        echo json_encode(['status' => 'error', 'message' => 'El ID del usuario es obligatorio']);
+    // Validar que el ID del usuario y el estado 'enabled' estén presentes
+    if (!$userId || is_null($enabled)) {
+        echo json_encode(['status' => 'error', 'message' => 'El ID y el estado del usuario son obligatorios']);
         exit;
     }
 
@@ -53,9 +44,9 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
     $tokenData = json_decode($response, true);
     $adminToken = $tokenData['access_token'];
 
-    // Habilitar el usuario en Keycloak
+    // Actualizar el estado del usuario (habilitar/deshabilitar)
     $userUpdateData = [
-        'enabled' => false,
+        'enabled' => $enabled,
     ];
 
     $ch = curl_init($users_url . '/' . $userId);
@@ -72,9 +63,10 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
     curl_close($ch);
 
     if ($http_code === 204) {
-        echo json_encode(['status' => 'success', 'message' => 'Usuario habilitado con éxito']);
+        $action = $enabled ? 'habilitado' : 'deshabilitado';
+        echo json_encode(['status' => 'success', 'message' => "Usuario {$action} con éxito"]);
     } else {
         $error = json_decode($response, true);
-        echo json_encode(['status' => 'error', 'message' => $error['errorMessage'] ?? 'Error al habilitar el usuario']);
+        echo json_encode(['status' => 'error', 'message' => $error['errorMessage'] ?? 'Error al actualizar el usuario']);
     }
 }

@@ -1,6 +1,10 @@
 <?php
 
 session_start();
+
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 if (empty($_SESSION['usuario']) || $_SESSION['tipo'] != 'admin') {
   header("Location: index.php?PanelAdmin");
   die();
@@ -14,7 +18,7 @@ include_once('./includes/navbar.php');
 include_once('./includes/bbdd.php');
 
 $usuario = $_SESSION['usuario'];
-$nombre_empresa = $_SESSION['nombre_empresa'];
+// $nombre_empresa = $_SESSION['nombre_empresa'];
 $tipo = $_SESSION['tipo'];
 
 $id = $_SESSION['id'];
@@ -24,14 +28,14 @@ if (!is_numeric($id)) {
 }
 
 // Consulta a la base de datos
-$sql = "SELECT transacciones.fecha, transacciones.descripcion, transacciones.importe, transacciones.ticket
+$sql = "SELECT transacciones.fecha, transacciones.descripcion, transacciones.importe, transacciones.ticket, usuarios.usuario
         FROM transacciones
         INNER JOIN usuarios_tarjetas ON usuarios_tarjetas.id = transacciones.id_usuario_tarjeta
-        WHERE usuarios_tarjetas.id_usuario = ?
+        INNER JOIN usuarios ON usuarios.id = usuarios_tarjetas.id_usuario
         ORDER BY transacciones.fecha DESC
         LIMIT 20";
 $stmt = $conn->prepare($sql);
-$stmt->bind_param("i", $id);
+// $stmt->bind_param("i", $id);
 $stmt->execute();
 $result = $stmt->get_result();
 
@@ -41,13 +45,14 @@ $datosGrafico = []; // Asociativo para agrupar por fecha
 
 if ($result->num_rows > 0) {
   while ($row = $result->fetch_assoc()) {
+    $usuarioNombre = htmlspecialchars($row['usuario']);
     $fecha = htmlspecialchars($row['fecha']);
     $descripcion = htmlspecialchars($row['descripcion']);
     $importe = htmlspecialchars($row['importe']);
     $ticket = htmlspecialchars($row['ticket']);
 
     // Para la tabla
-    $transacciones[] = [$fecha, $descripcion, $importe, $ticket];
+    $transacciones[] = [$usuarioNombre, $fecha, $descripcion, $importe, $ticket];
 
     // Para el gráfico (suma los importes por fecha)
     if (!isset($datosGrafico[$fecha])) {
@@ -76,6 +81,10 @@ $result->free();
       // Crear la tabla Grid.js
       new gridjs.Grid({
         columns: [{
+            name: "Usuario",
+            sort: true
+          },
+          {
             name: "Fecha",
             sort: true
           },

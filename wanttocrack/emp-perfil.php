@@ -1,12 +1,15 @@
 <?php
 session_start();
+
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 if (empty($_SESSION['usuario']) || $_SESSION['tipo'] != 'empresa') {
     header("Location: index.php");
     die();
 }
 
 $usuario = $_SESSION['usuario'];
-$nombre_empresa = $_SESSION['nombre_empresa'];
+// $nombre_empresa = $_SESSION['nombre_empresa'];
 $tipo = $_SESSION['tipo'];
 
 $np = "Inicio";
@@ -15,7 +18,7 @@ $bodyclass = '';
 include_once('./includes/head.php');
 include_once('./includes/cabecera.php');
 include_once('./includes/navbar.php');
-include_once('./includes/BBDD.php');
+include_once('./includes/bbdd.php');
 ?>
 
 
@@ -28,7 +31,8 @@ include_once('./includes/BBDD.php');
     <!-- <h2 class="text-center mb-4">Datos del perfil</h2> -->
     <?php
     // Consulta SQL para obtener los datos de un único usuario con id = 1
-    $sql = "SELECT id, tipo, usuario, correo, contrasena, nombre_empresa, CIF, ultima_conexion, fecha_registro, activo FROM usuarios WHERE id = 1";
+    $id = $_SESSION['id'];
+    $sql = "SELECT id, tipo, usuario, correo, nombre_empresa, CIF, ultima_conexion, fecha_registro FROM usuarios WHERE id = $id";
 
     // Ejecutar la consulta
     $result = $conn->query($sql);

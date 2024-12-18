@@ -16,7 +16,7 @@ include_once('./includes/navbar.php');
 include_once('./includes/bbdd.php');
 
 $usuario = $_SESSION['usuario'];
-$nombre_empresa = $_SESSION['nombre_empresa'];
+// $nombre_empresa = $_SESSION['nombre_empresa'];
 $tipo = $_SESSION['tipo'];
 
 $id = $_SESSION['id'];
